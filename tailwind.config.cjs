@@ -14,6 +14,9 @@ const config = {
     },
 
     extend: {
+      screens: {
+        'xs': '620px',
+      },
       colors: {
         themegray: {
           900: '#020202',
@@ -49,7 +52,6 @@ const config = {
         darkenedSecondaryBurntOrange: "#9B1C1B",
         darkenedSecondaryPurple: "#7F3F84",
         darkenedMutedPrimaryPurple: "#63214B"
-
       }
     },
   },
