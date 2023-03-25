@@ -27,7 +27,11 @@
 		</p>
 	</div>
 
-	<div class="w-full flex-1 bg-gray-400 p-1 xs:w-1/2 lg:w-2/3">
-		<img src={Img} alt="Description 3" class="w-full" />
+	<div class="w-full flex-1 bg-gray-400 p-1 transition-all duration-200 xs:w-1/2 lg:w-2/3">
+		<img
+			src={Img}
+			alt="Description 3"
+			class="w-full transform cursor-pointer border border-transparent transition-all duration-200 hover:-translate-y-[.1rem] hover:border-gray-400 hover:shadow-sm"
+		/>
 	</div>
 </div>
