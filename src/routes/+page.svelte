@@ -4,6 +4,7 @@
 	import { inview } from 'svelte-inview';
 	import { onMount } from 'svelte';
 	import { scrollToSection } from '../composables/scrollToSection';
+	import { navToOutsideLP } from './store';
 	import AaronHappeLogo from '../lib/AaronHappeLogo.svelte';
 	import Header from './Header.svelte';
 	import Work from './Work.svelte';
@@ -21,10 +22,8 @@
 	let smallHlClasses =
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
 	let currentSection = '';
-	let workVisible = false;
 	let workEl: HTMLDivElement | null;
 	let aboutEl: HTMLDivElement | null;
-	// let blogEl: HTMLDivElement | null;
 	let headerWrapperEl: HTMLDivElement | null;
 
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
@@ -45,6 +44,7 @@
 		if (userHasScrolled) {
 			currentSection = view;
 		}
+
 		history.pushState({}, '', `#${currentSection}`);
 	}
 
@@ -60,8 +60,10 @@
 
 	function handleProjectNavigate(event: CustomEvent) {
 		navigating = true;
+
 		setTimeout(() => {
 			navDelaying = false;
+			navToOutsideLP.set('bzees');
 		}, 200);
 	}
 
@@ -75,22 +77,7 @@
 </script>
 
 <div class="navigating-overlay h-screen">
-	{#if navigating}
-		<div class={`page-transition-cover fixed inset-0 z-20`}>
-			<div
-				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
-					navDelaying ? 'bottom-full' : ' bottom-0'
-				} z-30 bg-primaryBlue`}
-			/>
-			<div
-				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2  ${
-					navDelaying ? 'top-full' : 'top-0'
-				} z-30 bg-primaryBlue`}
-			/>
-		</div>
-	{/if}
-
-	<div class="relative h-[80vh] xs:h-[85vh] ">
+	<div class="relative h-[80vh] xs:h-[85vh]">
 		<div class="mx-auto max-w-[1300px]">
 			{#if startAnimation}
 				<div
@@ -110,7 +97,7 @@
 
 			<div class="relative p-4">
 				<AaronHappeLogo />
-				<div class="flex flex-col overflow-hidden pt-6 ">
+				<div class="flex flex-col overflow-hidden pt-6">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
@@ -183,7 +170,7 @@
 			bind:this={workEl}
 			id="work"
 		>
-			<div class={`transition ${currentSection === 'work' ? 'transition-in' : ''}`}>
+			<div class={`cursor-pointer transition ${currentSection === 'work' ? 'transition-in' : ''}`}>
 				<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
 			</div>
 		</div>
@@ -213,9 +200,7 @@
 	:global(a) {
 		display: none;
 	}
-	.custom-page-transition {
-		transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-	}
+
 	.slide-fade {
 		opacity: 0;
 		transform: translateY(8rem);
