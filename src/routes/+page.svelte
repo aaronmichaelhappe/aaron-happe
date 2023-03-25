@@ -8,36 +8,61 @@
 	import Header from './Header.svelte';
 	import Work from './Work.svelte';
 
-	function handleInView(view: string) {}
-
-	type ScrollToSections = {
-		work: HTMLDivElement | null;
-	};
-
-	type SectionType = {
-		detail: keyof ScrollToSections;
-	};
-
 	let fadeInText = false;
-	// 1.125rem - 1.75rem;
 	let go = false;
 	let introEnd = false;
+	let navigating = false;
+	let navDelaying = true;
 	let textLgHlFlyEnd = false;
 	let textSmSlideEnd = false;
+	let userHasScrolled = false;
 	let lgHlClasses =
 		'translate-x-[100] text-[3rem] leading-[3rem] font-extrabold uppercase  sm:text-[3.5rem] md:text-[4.5rem] md:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
 	let smHlClasses =
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
+	let currentSection = '';
+	let workEl: HTMLDivElement | null;
+	let aboutEl: HTMLDivElement | null;
+	let blogEl: HTMLDivElement | null;
 
-	let work: HTMLDivElement | null;
+	let example: HTMLDivElement | null;
+
+	onMount(() => {
+		const onFirstScroll = () => {
+			userHasScrolled = true;
+			window.removeEventListener('scroll', onFirstScroll);
+		};
+		window.addEventListener('scroll', onFirstScroll);
+
+		go = true;
+		setTimeout(() => {
+			fadeInText = true;
+		}, 180);
+	});
+
+	function handleInView(view: string) {
+		if (userHasScrolled) {
+			currentSection = view;
+		}
+		history.pushState({}, '', `#${currentSection}`);
+	}
 
 	function handleScrollTo(event: CustomEvent) {
-		const section: SectionType = event.detail;
-		let map = {
-			work: work
+		let mapKey: string = (currentSection = event.detail);
+		let map: { [key: string]: HTMLElement | null } = {
+			work: workEl
 		};
+		history.pushState({}, '', `#${currentSection}`);
 
-		scrollToSection(map.work);
+		scrollToSection(map[mapKey]);
+	}
+
+	function handleProjectNavigate(event: CustomEvent) {
+		navigating = true;
+		setTimeout(() => {
+			navDelaying = false;
+		}, 200);
+		example;
 	}
 
 	function onIntroEnd() {
@@ -49,17 +74,26 @@
 	}
 
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
-
-	onMount(() => {
-		go = true;
-		setTimeout(() => {
-			fadeInText = true;
-		}, 180);
-	});
 </script>
 
 <div class="h-screen ">
-	<div class="relative h-[85vh] ">
+	{#if navigating}
+		<div class={`page-transition-cover fixed inset-0 z-20`}>
+			<div
+				bind:this={example}
+				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
+					navDelaying ? 'bottom-full' : ' bottom-0'
+				} z-30 bg-primaryBlue`}
+			/>
+			<div
+				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2  ${
+					navDelaying ? 'top-full' : 'top-0'
+				} z-30 bg-primaryBlue`}
+			/>
+		</div>
+	{/if}
+
+	<div class="relative h-[85vh]">
 		<div class="mx-auto max-w-[1300px]">
 			{#if go}
 				<div
@@ -68,8 +102,8 @@
 					on:introend={() => onIntroEnd()}
 				/>
 			{/if}
-			<div class="relative z-30 px-4 pt-4">
-				<Header on:scrollto={handleScrollTo} />
+			<div class={`slide-fade ${go ? 'slide-fade-in' : ''}  relative z-30 px-4 pt-4 `}>
+				<Header {currentSection} on:scrollto={handleScrollTo} />
 			</div>
 
 			<div class="relative p-4 ">
@@ -136,11 +170,24 @@
 	<!-- underline the link in the header -->
 	<div class="section section-work mx-auto max-w-[1300px]">
 		<div>
-			<h3 class={`fade ${fadeInText ? 'fade-in' : ''} p-4 font-bold text-white`}>My Work.</h3>
+			<h4
+				class={`transition ${
+					fadeInText ? 'transition-in' : ''
+				} p-4 text-[4rem] font-bold text-white`}
+			>
+				My Work.
+			</h4>
 		</div>
 
-		<div use:inview on:inview_change={() => handleInView('work')} bind:this={work} id="work">
-			<Work />
+		<div
+			use:inview={{ threshold: 0.2 }}
+			on:inview_change={() => handleInView('work')}
+			bind:this={workEl}
+			id="work"
+		>
+			<div class={`transition ${currentSection === 'work' ? 'transition-in' : ''}`}>
+				<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
+			</div>
 		</div>
 	</div>
 </div>
@@ -149,12 +196,17 @@
 	:global(a) {
 		display: none;
 	}
-	.fade {
-		opacity: 0;
+	.custom-page-transition {
+		transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	.fade.fade-in {
+	.slide-fade {
+		opacity: 0;
+		transform: translateY(8rem);
+		transition: all 0.4s ease-in-out;
+	}
+	.slide-fade.slide-fade-in {
 		opacity: 100;
-		transition: opacity 0.4s ease-in-out;
+		transform: translateY(0);
 	}
 	.line2 {
 		top: calc(50% - 0.1rem);
