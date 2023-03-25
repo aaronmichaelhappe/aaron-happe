@@ -16,14 +16,18 @@
 	let largeTextAnimationFinished = false;
 	let smallTextAnimationFinished = false;
 	let userHasScrolled = false;
+	// let largeHlClasses =
+	// 	'translate-x-[100] text-[3rem] leading-[3rem] font-extrabold uppercase  sm:text-[3.5rem] md:text-[4.5rem] md:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
 	let largeHlClasses =
-		'translate-x-[100] text-[3rem] leading-[3rem] font-extrabold uppercase  sm:text-[3.5rem] md:text-[4.5rem] md:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
+		'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[4.5rem] sm:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
 	let smallHlClasses =
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
 	let currentSection = '';
 	let workEl: HTMLDivElement | null;
 	// let aboutEl: HTMLDivElement | null;
 	// let blogEl: HTMLDivElement | null;
+
+	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
 
 	onMount(() => {
 		const onFirstScroll = () => {
@@ -69,11 +73,9 @@
 	function onLargeTextAnimationEnd() {
 		largeTextAnimationFinished = true;
 	}
-
-	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
 </script>
 
-<div class="h-screen ">
+<div class="navigating-overlay h-screen">
 	{#if navigating}
 		<div class={`page-transition-cover fixed inset-0 z-20`}>
 			<div
@@ -89,11 +91,11 @@
 		</div>
 	{/if}
 
-	<div class="relative h-[85vh]">
+	<div class="relative h-[80vh] xs:h-[85vh]">
 		<div class="mx-auto max-w-[1300px]">
 			{#if startAnimation}
 				<div
-					class="absolute inset-0 z-0 h-[85vh] bg-primaryPink"
+					class="absolute inset-0 z-0 h-[80vh] bg-primaryPink xs:h-[85vh]"
 					in:fly={{ y: '100%' }}
 					on:introend={() => onIntroAnimationEnd()}
 				/>
@@ -102,7 +104,7 @@
 				<Header {currentSection} on:scrollto={handleScrollTo} />
 			</div>
 
-			<div class="relative p-4 ">
+			<div class="relative p-4">
 				<AaronHappeLogo />
 				<div class="flex flex-col overflow-hidden pt-6 ">
 					{#if introEnd}
@@ -160,12 +162,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="section section-work mx-auto max-w-[1300px]">
+	<section class="section-work mx-auto max-w-[1300px]">
 		<div>
 			<h4
 				class={`transition ${
 					fadeInText ? 'transition-in' : ''
-				} p-4 text-[4rem] font-bold text-white`}
+				} p-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
 			>
 				My Work.
 			</h4>
@@ -181,7 +183,7 @@
 				<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
 			</div>
 		</div>
-	</div>
+	</section>
 </div>
 
 <style>
