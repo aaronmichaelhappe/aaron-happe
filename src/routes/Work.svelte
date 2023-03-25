@@ -1,15 +1,33 @@
-<script>
-	import Img from '../images/abst1.png';
+<script lang="ts">
+	import Img from '../images/bzees.png';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	function handleClick(event: MouseEvent, name: string) {
+		dispatch('projectnavigate', { event, to: name.toLowerCase() });
+	}
+	function handleKeydown(event: KeyboardEvent, name: string) {
+		if (event.key === 'Enter') {
+			handleClick(event, name);
+		}
+	}
 </script>
 
-<div class="flex flex-wrap justify-between p-4">
-	<div class="w-full px-2 py-2 xs:w-1/2 lg:w-1/3">
-		<img src={Img} alt="Description 1" class="w-full" />
+<div
+	class="flex flex-wrap justify-between gap-2 p-4"
+	on:keydown={(e) => handleKeydown(e, 'bzees')}
+	on:click={(e) => handleClick(e, 'bzees')}
+>
+	<div class="w-full flex-none bg-gray-800 p-5 text-gray-200 xs:w-1/2 lg:w-1/3">
+		<h3 class="pb-4 leading-[3rem]">Bzees Landing Page.</h3>
+		<p class="leading-7">
+			A landing page created for Bzees in 2017 or 2018. Some of re-created using Svelte and
+			Tailwind. Some of it is the original code.
+		</p>
 	</div>
-	<div class="hidden px-2 py-2 xs:block xs:w-1/2 lg:w-1/3">
-		<img src={Img} alt="Description 2" class="w-full" />
-	</div>
-	<div class="w-full bg-gray-800 px-2 py-2 xs:w-1/2 lg:w-1/3">
+
+	<div class="w-full flex-1 bg-gray-400 p-1 xs:w-1/2 lg:w-2/3">
 		<img src={Img} alt="Description 3" class="w-full" />
 	</div>
 </div>
