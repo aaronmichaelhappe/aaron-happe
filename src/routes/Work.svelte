@@ -4,20 +4,16 @@
 
 	const dispatch = createEventDispatcher();
 
-	function handleClick(event: MouseEvent, name: string) {
+	function handleDispatch(event: Event, name: string) {
 		dispatch('projectnavigate', { event, to: name.toLowerCase() });
-	}
-	function handleKeydown(event: KeyboardEvent, name: string) {
-		if (event.key === 'Enter') {
-			handleClick(event, name);
-		}
 	}
 </script>
 
-<div
+<a
+	href="/bzees"
 	class="flex flex-wrap justify-between gap-2 p-4"
-	on:keydown={(e) => handleKeydown(e, 'bzees')}
-	on:click={(e) => handleClick(e, 'bzees')}
+	tabindex="0"
+	on:click|preventDefault={(e) => handleDispatch(e, 'bzees')}
 >
 	<div class="w-full flex-none bg-gray-800 p-5 text-gray-200 xs:w-1/2 lg:w-1/3">
 		<h3 class="pb-4 leading-[3rem]">Bzees Landing Page.</h3>
@@ -34,4 +30,4 @@
 			class="w-full transform cursor-pointer border border-transparent transition-all duration-200 hover:-translate-y-[.1rem] hover:border-gray-400 hover:shadow-sm"
 		/>
 	</div>
-</div>
+</a>

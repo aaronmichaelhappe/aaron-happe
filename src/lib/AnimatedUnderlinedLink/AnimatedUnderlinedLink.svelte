@@ -54,6 +54,7 @@
 	<a
 		class={`${aClasses} cursor-pointer`}
 		{href}
+		tabindex="0"
 		on:click={handleClick}
 		on:mouseenter={(e) => animateLine(e, true)}
 		on:mouseleave={(e) => animateLine(e, false)}
