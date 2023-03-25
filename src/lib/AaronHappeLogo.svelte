@@ -26,5 +26,6 @@
 	.fade.fade-in {
 		opacity: 100;
 		transition: opacity 0.4s ease-in-out;
+		transition-duration: 0.4s;
 	}
 </style>
