@@ -24,7 +24,7 @@
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
 	let currentSection = '';
 	let workEl: HTMLDivElement | null;
-	// let aboutEl: HTMLDivElement | null;
+	let aboutEl: HTMLDivElement | null;
 	// let blogEl: HTMLDivElement | null;
 
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
@@ -35,7 +35,6 @@
 			window.removeEventListener('scroll', onFirstScroll);
 		};
 		window.addEventListener('scroll', onFirstScroll);
-
 		startAnimation = true;
 		setTimeout(() => {
 			fadeInText = true;
@@ -182,6 +181,25 @@
 			<div class={`transition ${currentSection === 'work' ? 'transition-in' : ''}`}>
 				<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
 			</div>
+		</div>
+	</section>
+	<section>
+		<div>
+			<h4
+				class={`transition ${
+					fadeInText ? 'transition-in' : ''
+				} p-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
+			>
+				About.
+			</h4>
+		</div>
+		<div
+			use:inview={{ threshold: 0.2 }}
+			on:inview_change={() => handleInView('work')}
+			bind:this={aboutEl}
+			id="about"
+		>
+			<div class={`transition ${currentSection === 'about' ? 'transition-in' : ''}`} />
 		</div>
 	</section>
 </div>
