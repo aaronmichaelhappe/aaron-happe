@@ -16,16 +16,16 @@
 	let largeTextAnimationFinished = false;
 	let smallTextAnimationFinished = false;
 	let userHasScrolled = false;
-	// let largeHlClasses =
-	// 	'translate-x-[100] text-[3rem] leading-[3rem] font-extrabold uppercase  sm:text-[3.5rem] md:text-[4.5rem] md:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
 	let largeHlClasses =
 		'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[4.5rem] sm:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
 	let smallHlClasses =
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
 	let currentSection = '';
+	let workVisible = false;
 	let workEl: HTMLDivElement | null;
 	let aboutEl: HTMLDivElement | null;
 	// let blogEl: HTMLDivElement | null;
+	let headerWrapperEl: HTMLDivElement | null;
 
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
 
@@ -90,7 +90,7 @@
 		</div>
 	{/if}
 
-	<div class="relative h-[80vh] xs:h-[85vh]">
+	<div class="relative h-[80vh] xs:h-[85vh] ">
 		<div class="mx-auto max-w-[1300px]">
 			{#if startAnimation}
 				<div
@@ -99,7 +99,12 @@
 					on:introend={() => onIntroAnimationEnd()}
 				/>
 			{/if}
-			<div class={`slide-fade ${startAnimation ? 'slide-fade-in' : ''}  relative z-30 px-4 pt-4 `}>
+			<div
+				bind:this={headerWrapperEl}
+				class={`slide-fade bg-primaryPink md:sticky md:top-0 ${
+					startAnimation ? 'slide-fade-in' : ''
+				}  relative z-30 px-4 pt-4 `}
+			>
 				<Header {currentSection} on:scrollto={handleScrollTo} />
 			</div>
 
@@ -204,7 +209,7 @@
 	</section>
 </div>
 
-<style>
+<style lang="post-css">
 	:global(a) {
 		display: none;
 	}
@@ -219,19 +224,5 @@
 	.slide-fade.slide-fade-in {
 		opacity: 100;
 		transform: translateY(0);
-	}
-	.line2 {
-		top: calc(50% - 0.1rem);
-	}
-	.peer:checked ~ .hamburger-lines .line1 {
-		transform: translateY(0.9rem) rotate(45deg);
-	}
-
-	.peer:checked ~ .hamburger-lines .line2 {
-		opacity: 0;
-	}
-
-	.peer:checked ~ .hamburger-lines .line3 {
-		transform: translateY(-0.9rem) rotate(-45deg);
 	}
 </style>
