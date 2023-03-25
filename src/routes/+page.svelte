@@ -9,23 +9,21 @@
 	import Work from './Work.svelte';
 
 	let fadeInText = false;
-	let go = false;
+	let startAnimation = false;
 	let introEnd = false;
 	let navigating = false;
 	let navDelaying = true;
-	let textLgHlFlyEnd = false;
-	let textSmSlideEnd = false;
+	let largeTextAnimationFinished = false;
+	let smallTextAnimationFinished = false;
 	let userHasScrolled = false;
-	let lgHlClasses =
+	let largeHlClasses =
 		'translate-x-[100] text-[3rem] leading-[3rem] font-extrabold uppercase  sm:text-[3.5rem] md:text-[4.5rem] md:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
-	let smHlClasses =
+	let smallHlClasses =
 		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
 	let currentSection = '';
 	let workEl: HTMLDivElement | null;
-	let aboutEl: HTMLDivElement | null;
-	let blogEl: HTMLDivElement | null;
-
-	let example: HTMLDivElement | null;
+	// let aboutEl: HTMLDivElement | null;
+	// let blogEl: HTMLDivElement | null;
 
 	onMount(() => {
 		const onFirstScroll = () => {
@@ -34,7 +32,7 @@
 		};
 		window.addEventListener('scroll', onFirstScroll);
 
-		go = true;
+		startAnimation = true;
 		setTimeout(() => {
 			fadeInText = true;
 		}, 180);
@@ -62,15 +60,14 @@
 		setTimeout(() => {
 			navDelaying = false;
 		}, 200);
-		example;
 	}
 
-	function onIntroEnd() {
+	function onIntroAnimationEnd() {
 		introEnd = true;
 	}
 
-	function onHeadlineFlyEnd() {
-		textLgHlFlyEnd = true;
+	function onLargeTextAnimationEnd() {
+		largeTextAnimationFinished = true;
 	}
 
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
@@ -80,7 +77,6 @@
 	{#if navigating}
 		<div class={`page-transition-cover fixed inset-0 z-20`}>
 			<div
-				bind:this={example}
 				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
 					navDelaying ? 'bottom-full' : ' bottom-0'
 				} z-30 bg-primaryBlue`}
@@ -95,14 +91,14 @@
 
 	<div class="relative h-[85vh]">
 		<div class="mx-auto max-w-[1300px]">
-			{#if go}
+			{#if startAnimation}
 				<div
 					class="absolute inset-0 z-0 h-[85vh] bg-primaryPink"
 					in:fly={{ y: '100%' }}
-					on:introend={() => onIntroEnd()}
+					on:introend={() => onIntroAnimationEnd()}
 				/>
 			{/if}
-			<div class={`slide-fade ${go ? 'slide-fade-in' : ''}  relative z-30 px-4 pt-4 `}>
+			<div class={`slide-fade ${startAnimation ? 'slide-fade-in' : ''}  relative z-30 px-4 pt-4 `}>
 				<Header {currentSection} on:scrollto={handleScrollTo} />
 			</div>
 
@@ -111,23 +107,23 @@
 				<div class="flex flex-col overflow-hidden pt-6 ">
 					{#if introEnd}
 						<div>
-							{#if !textLgHlFlyEnd}
+							{#if !largeTextAnimationFinished}
 								<div class="mb-2 sm:mb-4">
-									<span class={smHlClasses + ' invisible'}>mobile apps.</span><span
-										class={smHlClasses + ' invisible'}>web apps.</span
-									><span class={smHlClasses + ' invisible'}>web pages.</span>
+									<span class={smallHlClasses + ' invisible'}>mobile apps.</span><span
+										class={smallHlClasses + ' invisible'}>web apps.</span
+									><span class={smallHlClasses + ' invisible'}>web pages.</span>
 								</div>
 							{:else}
 								<div class="mb-2 sm:mb-4">
 									{#each headlines as line, i}
 										<span
-											class={smHlClasses}
+											class={smallHlClasses}
 											in:fly={{
 												y: 100,
 												delay: 250 * i,
 												easing: backOut
 											}}
-											on:introend={() => (textSmSlideEnd = true)}
+											on:introend={() => (smallTextAnimationFinished = true)}
 										>
 											{line}
 										</span>
@@ -137,19 +133,19 @@
 						</div>
 						<div>
 							<p
-								class={lgHlClasses}
+								class={largeHlClasses}
 								in:fly={{
 									x: '-100%',
 									duration: 650,
 									easing: backOut
 								}}
-								on:introend={() => onHeadlineFlyEnd()}
+								on:introend={() => onLargeTextAnimationEnd()}
 							>
 								<span class="whitespace-nowrap">Code + </span>
 								<span class="whitespace-nowrap">Design +</span>
 							</p>
 							<p
-								class={lgHlClasses}
+								class={largeHlClasses}
 								in:fly={{
 									x: '100%',
 									duration: 650,
@@ -161,13 +157,9 @@
 						</div>
 					{/if}
 				</div>
-				<!-- <h2 class="text-white">apps. mobile. web.</h2> -->
 			</div>
 		</div>
 	</div>
-	<!-- // scroll past the section -->
-	<!-- change the hash -->
-	<!-- underline the link in the header -->
 	<div class="section section-work mx-auto max-w-[1300px]">
 		<div>
 			<h4
