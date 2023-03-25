@@ -21,9 +21,19 @@
 	import AnimatedUnderlinedLink from '../lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
 	import { createEventDispatcher } from 'svelte';
 
+	// elements for each section
+	export let currentSection = '';
+
+	let workEl: any;
+	let aboutEl: any;
+	let blogEl: any;
+
+	$: stuckItem = currentSection;
+
 	const dispatch = createEventDispatcher();
 
-	function handleScrollTo(event: CustomEvent) {
+	function handleScrollTo(event: CustomEvent, index: number) {
+		stuckItem = event.detail.to;
 		dispatch('scrollto', event.detail.to);
 	}
 </script>
@@ -32,30 +42,38 @@
 	<ul class="flex justify-end text-lg">
 		<div>
 			<AnimatedUnderlinedLink
+				bind:this={workEl}
 				name="Work"
 				lineColor="primaryPink"
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
-				on:scrollto={handleScrollTo}
+				stuck={stuckItem === 'work'}
+				on:animatedlinkclicked={(e) => handleScrollTo(e, 0)}
 			/>
 		</div>
 		<div class="ml-8">
 			<AnimatedUnderlinedLink
+				bind:this={aboutEl}
 				name="About"
 				lineColor="primaryPink"
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
+				stuck={stuckItem === 'about'}
+				on:scrollto={(e) => handleScrollTo(e, 1)}
 			/>
 		</div>
 		<div class="ml-8">
 			<AnimatedUnderlinedLink
+				bind:this={blogEl}
 				name="Blog"
 				lineColor="primaryPink"
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
+				stuck={stuckItem === 'blog'}
+				on:scrollto={(e) => handleScrollTo(e, 2)}
 			/>
 		</div>
 	</ul>
