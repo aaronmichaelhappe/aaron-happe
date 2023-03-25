@@ -1,17 +1,26 @@
 <script lang="ts">
-	import classNames from 'classnames';
-	import { tweened } from 'svelte/motion';
 	import { createEventDispatcher } from 'svelte';
 	import { cubicInOut } from 'svelte/easing';
-	export let href: string | undefined = '#';
+	import { tweened } from 'svelte/motion';
+	import classNames from 'classnames';
+
 	export let name: string;
+	export let lineHeight: string = '.1rem';
 	export let wrappingEl: string = 'li';
 	export let customAClasses: undefined | string = undefined;
 	export let customNameClasses: undefined | string = undefined;
 	export let customLineClasses: undefined | string = undefined;
 	export let customLiClasses: undefined | string = undefined;
-	export let triggerUnderline: undefined | Boolean = undefined;
-	export let lineHeight: string = '.1rem';
+	export let href: string | undefined = undefined;
+	export let stuck: boolean = false;
+
+	$: {
+		if (stuck) {
+			$size = 1;
+		} else {
+			$size = 0;
+		}
+	}
 
 	$: aClasses = customAClasses
 		? classNames('inline-block', customAClasses)
@@ -23,8 +32,7 @@
 		customLineClasses
 	);
 
-	$: triggerUnderline ? animateLine(null, true) : triggerUnderline;
-	$: liClasses = classNames(`leading-[${lineHeight}] `, customLiClasses);
+	$: liClasses = classNames(`uppercase leading-[.5] `, customLiClasses);
 
 	const dispatch = createEventDispatcher();
 	const size = tweened(0, {
@@ -32,15 +40,17 @@
 		easing: cubicInOut
 	});
 
-	function animateLine(e: Event | null, enter: boolean) {
-		$size = enter ? 1 : 0;
+	export function animateLine(e: Event | null, enter: boolean) {
+		if (!stuck) {
+			$size = enter ? 1 : 0;
+		}
 	}
 	function handleClick(event: MouseEvent) {
-		dispatch('scrollto', { event, to: 'work' });
+		dispatch('animatedlinkclicked', { event, to: name.toLowerCase() });
 	}
 </script>
 
-<svelte:element this={wrappingEl} class="uppercase leading-[.5]">
+<svelte:element this={wrappingEl} class={liClasses}>
 	<a
 		class={`${aClasses} cursor-pointer`}
 		{href}
