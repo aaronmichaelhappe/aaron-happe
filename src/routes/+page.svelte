@@ -30,10 +30,6 @@
 		startAnimation = true;
 	});
 
-	$: {
-		if (currentSection !== '') history.pushState({}, '', `#${currentSection}`);
-	}
-
 	function handleInView(e: CustomEvent) {
 		if (!userHasScrolled) return;
 		currentSection = e.detail.view;
@@ -46,11 +42,6 @@
 		};
 
 		scrollToSection(map[mapKey]);
-	}
-
-	function handleProjectNavigate(event: CustomEvent) {
-		userHasScrolled = false;
-		myGotoName.set('bzees');
 	}
 
 	function onIntroAnimationEnd() {
@@ -150,7 +141,7 @@
 			{currentSection}
 			sectionEl={workEl}
 		>
-			<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
+			<Work />
 		</LpSection>
 	</div>
 </div>

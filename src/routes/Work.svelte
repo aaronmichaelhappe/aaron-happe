@@ -1,20 +1,8 @@
 <script lang="ts">
 	import Img from '../images/bzees.png';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
-
-	function handleDispatch(event: Event, name: string) {
-		dispatch('projectnavigate', { event, to: name.toLowerCase() });
-	}
 </script>
 
-<a
-	href="/bzees"
-	class="flex flex-wrap justify-between gap-2 p-4"
-	tabindex="0"
-	on:click|preventDefault={(e) => handleDispatch(e, 'bzees')}
->
+<a href="/bzees" class="flex flex-wrap justify-between gap-2 p-4" tabindex="0">
 	<div class="w-full flex-none bg-gray-800 p-5 text-gray-200 xs:w-1/2 lg:w-1/3">
 		<h3 class="pb-4 leading-[3rem]">Bzees Landing Page.</h3>
 		<p class="leading-7">
