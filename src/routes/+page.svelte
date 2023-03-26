@@ -1,19 +1,17 @@
 <script lang="ts">
 	import { backOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
-	import { inview } from 'svelte-inview';
 	import { onMount } from 'svelte';
 	import { scrollToSection } from '../composables/scrollToSection';
-	import { navToOutsideLP } from './store';
+	import { myGotoName } from './store';
 	import AaronHappeLogo from '../lib/AaronHappeLogo.svelte';
 	import Header from './Header.svelte';
+
+	import LpSection from './LpSection.svelte';
 	import Work from './Work.svelte';
 
-	let fadeInText = false;
 	let startAnimation = false;
 	let introEnd = false;
-	let navigating = false;
-	let navDelaying = true;
 	let largeTextAnimationFinished = false;
 	let smallTextAnimationFinished = false;
 	let userHasScrolled = false;
@@ -29,42 +27,29 @@
 	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
 
 	onMount(() => {
-		const onFirstScroll = () => {
-			userHasScrolled = true;
-			window.removeEventListener('scroll', onFirstScroll);
-		};
-		window.addEventListener('scroll', onFirstScroll);
 		startAnimation = true;
-		setTimeout(() => {
-			fadeInText = true;
-		}, 180);
 	});
 
-	function handleInView(view: string) {
-		if (userHasScrolled) {
-			currentSection = view;
-		}
+	$: {
+		if (currentSection !== '') history.pushState({}, '', `#${currentSection}`);
+	}
 
-		history.pushState({}, '', `#${currentSection}`);
+	function handleInView(e: CustomEvent) {
+		if (!userHasScrolled) return;
+		currentSection = e.detail.view;
 	}
 
 	function handleScrollTo(event: CustomEvent) {
-		let mapKey: string = (currentSection = event.detail);
+		let mapKey: string = event.detail;
 		let map: { [key: string]: HTMLElement | null } = {
 			work: workEl
 		};
-		history.pushState({}, '', `#${currentSection}`);
-
 		scrollToSection(map[mapKey]);
 	}
 
 	function handleProjectNavigate(event: CustomEvent) {
-		navigating = true;
-
-		setTimeout(() => {
-			navDelaying = false;
-			navToOutsideLP.set('bzees');
-		}, 200);
+		userHasScrolled = false;
+		myGotoName.set('bzees');
 	}
 
 	function onIntroAnimationEnd() {
@@ -76,35 +61,38 @@
 	}
 </script>
 
+<svelte:window on:scroll={() => (userHasScrolled = true)} />
+
 <div class="navigating-overlay h-screen">
 	<div class="relative h-[80vh] xs:h-[85vh]">
 		<div class="mx-auto max-w-[1300px]">
-			{#if startAnimation}
+			<div class="mx-auto max-w-[1300px]">
+				{#if startAnimation}
+					<div
+						class="absolute inset-0 z-0 h-[80vh] bg-primaryPink xs:h-[85vh]"
+						in:fly={{ y: '100%' }}
+						on:introend={() => onIntroAnimationEnd()}
+					/>
+				{/if}
 				<div
-					class="absolute inset-0 z-0 h-[80vh] bg-primaryPink xs:h-[85vh]"
-					in:fly={{ y: '100%' }}
-					on:introend={() => onIntroAnimationEnd()}
-				/>
-			{/if}
-			<div
-				bind:this={headerWrapperEl}
-				class={`slide-fade bg-primaryPink md:sticky md:top-0 ${
-					startAnimation ? 'slide-fade-in' : ''
-				}  relative z-30 px-4 pt-4 `}
-			>
-				<Header {currentSection} on:scrollto={handleScrollTo} />
+					bind:this={headerWrapperEl}
+					class={`duration-400 relative z-30 bg-primaryPink px-4 pt-4 transition-all ease-in-out md:sticky md:top-0 ${
+						startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'
+					}`}
+				>
+					<Header {currentSection} on:scrollto={handleScrollTo} />
+				</div>
 			</div>
-
 			<div class="relative p-4">
 				<AaronHappeLogo />
-				<div class="flex flex-col overflow-hidden pt-6">
+				<div class="flex flex-col overflow-hidden pt-6 ">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
 								<div class="mb-2 sm:mb-4">
-									<span class={smallHlClasses + ' invisible'}>mobile apps.</span><span
-										class={smallHlClasses + ' invisible'}>web apps.</span
-									><span class={smallHlClasses + ' invisible'}>web pages.</span>
+									<span class={smallHlClasses + ' invisible'}>mobile apps.</span>
+									<span class={smallHlClasses + ' invisible'}>web apps.</span>
+									<span class={smallHlClasses + ' invisible'}>web pages.</span>
 								</div>
 							{:else}
 								<div class="mb-2 sm:mb-4">
@@ -153,47 +141,15 @@
 			</div>
 		</div>
 	</div>
-	<section class="section-work mx-auto max-w-[1300px]">
-		<div>
-			<h4
-				class={`transition ${
-					fadeInText ? 'transition-in' : ''
-				} p-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
-			>
-				My Work.
-			</h4>
-		</div>
-
-		<div
-			use:inview={{ threshold: 0.2 }}
-			on:inview_change={() => handleInView('work')}
-			bind:this={workEl}
-			id="work"
-		>
-			<div class={`cursor-pointer transition ${currentSection === 'work' ? 'transition-in' : ''}`}>
-				<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
-			</div>
-		</div>
-	</section>
-	<section>
-		<div>
-			<h4
-				class={`transition ${
-					fadeInText ? 'transition-in' : ''
-				} p-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
-			>
-				About.
-			</h4>
-		</div>
-		<div
-			use:inview={{ threshold: 0.2 }}
-			on:inview_change={() => handleInView('work')}
-			bind:this={aboutEl}
-			id="about"
-		>
-			<div class={`transition ${currentSection === 'about' ? 'transition-in' : ''}`} />
-		</div>
-	</section>
+	<LpSection
+		on:inview={(e) => handleInView(e)}
+		title="My Work"
+		name="work"
+		{currentSection}
+		sectionEl={workEl}
+	>
+		<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
+	</LpSection>
 </div>
 
 <style lang="post-css">

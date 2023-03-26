@@ -1,24 +1,14 @@
 <script lang="ts">
 	import '../app.css';
-	import { navToOutsideLP } from './store';
-	import { goto } from '$app/navigation';
+	import { isNavigating } from './store';
 
-	let navNotTransitioning = true;
+	let navTransitionHold = true;
+
+	// $: !navTransitionHold ? goto(`/${myGotoNameValue}`) : '';
 	let navigating = false;
-	let navToOutsideLPValue: string;
-
 	$: {
-		navToOutsideLPValue = $navToOutsideLP;
-		if (navToOutsideLPValue !== '') {
-			navigating = true;
-			setTimeout(() => {
-				navNotTransitioning = false;
-				goto(`/${navToOutsideLPValue}`);
-				setTimeout(() => {
-					navNotTransitioning = true;
-				}, 900);
-			}, 20);
-		}
+		navigating = $isNavigating;
+		if (navigating) setTimeout(() => (navTransitionHold = false), 300);
 	}
 </script>
 
@@ -27,12 +17,12 @@
 		<div class={`page-transition-cover fixed inset-0 z-20`}>
 			<div
 				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
-					navNotTransitioning ? 'bottom-full' : ' bottom-0'
+					navTransitionHold ? 'bottom-full' : ' bottom-0'
 				} z-30 bg-primaryBlue`}
 			/>
 			<div
 				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2  ${
-					navNotTransitioning ? 'top-full' : 'top-0'
+					navTransitionHold ? 'top-full' : 'top-0'
 				} z-30 bg-primaryBlue`}
 			/>
 		</div>
