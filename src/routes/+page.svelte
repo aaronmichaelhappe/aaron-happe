@@ -44,6 +44,7 @@
 		let map: { [key: string]: HTMLElement | null } = {
 			work: workEl
 		};
+
 		scrollToSection(map[mapKey]);
 	}
 
@@ -141,15 +142,17 @@
 			</div>
 		</div>
 	</div>
-	<LpSection
-		on:inview={(e) => handleInView(e)}
-		title="My Work"
-		name="work"
-		{currentSection}
-		sectionEl={workEl}
-	>
-		<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
-	</LpSection>
+	<div id="work" bind:this={workEl}>
+		<LpSection
+			on:inview={(e) => handleInView(e)}
+			title="My Work"
+			name="work"
+			{currentSection}
+			sectionEl={workEl}
+		>
+			<Work on:projectnavigate={(e) => handleProjectNavigate(e)} />
+		</LpSection>
+	</div>
 </div>
 
 <style lang="post-css">

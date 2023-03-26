@@ -38,7 +38,6 @@
 		use:inview={{ threshold: 0.2 }}
 		on:inview_change={() => handleInView(name)}
 		bind:this={sectionEl}
-		id="work"
 	>
 		<div class={`cursor-pointer transition ${currentSection === name ? 'transition-in' : ''}`}>
 			<slot />
