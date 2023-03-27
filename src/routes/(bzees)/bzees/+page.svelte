@@ -10,27 +10,17 @@
 	// });
 </script>
 
-<!-- {#if visible}
-	<div transition:fade> -->
-<div>
-	<p>All of our styles feature.</p>
+<div class="h-screen bg-lightenedPrimaryYellow bg-lightenedMutedPrimaryPurple pt-2 text-center">
+	<h3 class="text-center text-lightenedPrimaryPurple">Bzees Cloud Technology</h3>
+	<p class="mx-auto max-w-[1100px] text-center text-lg text-themegray-700">
+		I am currently redeveloping this project to be done in svelte. But in the meantime, checkout the
+		code pen. The animated shoes shoud be the only thing of interest. Please keep in mind this code
+		is more than 5 years old and I wouldn't write it like this today.
+	</p>
+	<a
+		class="mt-2 inline-block cursor-pointer text-xl font-bold text-primaryBlue hover:text-lightenedPrimaryBlue"
+		href="https://codepen.io/aaronmichaelhappe/pen/XWBvyLV?editors=1010">Bzees Code Pen</a
+	>
 </div>
-<h3>Bzees Cloud Technology</h3>
-<p>
-	I am currently redeveloping this project to be done in svelte. but in the meantime, checkout the
-	code pen. Please keep in mind this code is more than 5 years old and I wouldn't write it like this
-	today.
-</p>
-<p>https://codepen.io/aaronmichaelhappe/pen/XWBvyLV?editors=1010</p>
-<!-- <p>
-	Filled with magical unicorn down, Bzees Cloud Technology is designed to feel, well, like a cloud…
-	weightless, energized and free.*
-</p>
-<p>
-	*Bzees makes no claim to fully understand or know the deep, complex feelings of clouds. But, as
-	friends to clouds, unicorns and many, many four-legged friends alike, we can stand by these
-	attributes comfortably.
-</p> -->
-<!-- </div>
-{/if} -->
+
 <!-- <ShoeAnimation /> -->

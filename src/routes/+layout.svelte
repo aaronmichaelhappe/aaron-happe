@@ -1,29 +1,37 @@
 <script lang="ts">
 	import '../app.css';
-	import { isNavigating } from './store';
 
-	let navTransitionHold = true;
+	import { fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
-	// $: !navTransitionHold ? goto(`/${myGotoNameValue}`) : '';
-	let navigating = false;
+	let visible = false;
+	let previousId: string | null;
+	let routeId: string | null = null;
+
 	$: {
-		navigating = $isNavigating;
-		if (navigating) setTimeout(() => (navTransitionHold = false), 300);
+		if (routeId !== $page.route.id && $page.route.id !== '/') {
+			previousId = routeId;
+			visible = true;
+			setTimeout(() => (visible = false), 600);
+		}
 	}
+	// onMount if no mount and on hp dont run, first run
 </script>
 
 <div class="app min-h-screen w-full">
-	{#if navigating}
+	{#if visible}
 		<div class={`page-transition-cover fixed inset-0 z-20`}>
 			<div
-				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
-					navTransitionHold ? 'bottom-full' : ' bottom-0'
-				} z-30 bg-primaryBlue`}
+				in:fly={{ y: '-100%' }}
+				out:fly={{ y: '100%' }}
+				class={`custom-page-transition top-left absolute bottom-0 top-0 right-1/2  left-0
+				z-30 bg-primaryBlue`}
 			/>
 			<div
-				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2  ${
-					navTransitionHold ? 'top-full' : 'top-0'
-				} z-30 bg-primaryBlue`}
+				in:fly={{ y: '100%' }}
+				out:fly={{ y: '-100%' }}
+				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2 top-0 z-30 bg-primaryBlue`}
 			/>
 		</div>
 	{/if}
