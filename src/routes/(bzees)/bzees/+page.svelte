@@ -10,7 +10,7 @@
 	// });
 </script>
 
-<div class="h-screen bg-lightenedPrimaryYellow bg-lightenedMutedPrimaryPurple pt-2 text-center">
+<div class="min-h-screen bg-lightenedPrimaryYellow bg-lightenedMutedPrimaryPurple pt-2 text-center">
 	<h3 class="text-center text-lightenedPrimaryPurple">Bzees Cloud Technology</h3>
 	<p class="mx-auto max-w-[1100px] text-center text-lg text-themegray-700">
 		I am currently redeveloping this project to be done in svelte. But in the meantime, checkout the

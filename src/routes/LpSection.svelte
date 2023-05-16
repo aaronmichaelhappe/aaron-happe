@@ -29,7 +29,7 @@
 		<h4
 			class={`transition ${
 				fadeInText ? 'transition-in' : ''
-			} p-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
+			} px-4 pb-4 text-[3rem] font-bold text-white sm:text-[4rem]`}
 		>
 			{title}
 		</h4>

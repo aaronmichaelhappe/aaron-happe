@@ -15,16 +15,18 @@
 	let largeTextAnimationFinished = false;
 	let smallTextAnimationFinished = false;
 	let userHasScrolled = false;
+	// let largeHlClasses =
+	// 	'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[6rem] sm:leading-[6rem] md:text-[7rem] md:leading-[7rem] lg:text-[9rem] lg:leading-[9rem]';
 	let largeHlClasses =
-		'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[4.5rem] sm:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
+		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12vw] leading-[12vw]';
 	let smallHlClasses =
-		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
+		'mr-2 inline-block text-[1.5rem] font-extrabold leading-[1.5rem] text-white sm:text-[4vw] sm:leading-[4vw]  md:text-[4vw] md:leading-[4vw]';
 	let currentSection = '';
 	let workEl: HTMLDivElement | null;
 	let aboutEl: HTMLDivElement | null;
 	let headerWrapperEl: HTMLDivElement | null;
 
-	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
+	const headlines = ['Slick.', '', 'modern.', ' ', 'apps.'];
 
 	onMount(() => {
 		startAnimation = true;
@@ -40,7 +42,6 @@
 		let map: { [key: string]: HTMLElement | null } = {
 			work: workEl
 		};
-
 		scrollToSection(map[mapKey]);
 	}
 
@@ -77,14 +78,12 @@
 			</div>
 			<div class="relative p-4">
 				<AaronHappeLogo />
-				<div class="flex flex-col overflow-hidden pt-6 ">
+				<div class="flex flex-col overflow-hidden">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
 								<div class="mb-2 sm:mb-4">
-									<span class={smallHlClasses + ' invisible'}>mobile apps.</span>
-									<span class={smallHlClasses + ' invisible'}>web apps.</span>
-									<span class={smallHlClasses + ' invisible'}>web pages.</span>
+									<span class={smallHlClasses + ' invisible'}>web & mobile apps.</span>
 								</div>
 							{:else}
 								<div class="mb-2 sm:mb-4">
@@ -96,10 +95,8 @@
 												delay: 250 * i,
 												easing: backOut
 											}}
-											on:introend={() => (smallTextAnimationFinished = true)}
+											on:introend={() => (smallTextAnimationFinished = true)}>{line}</span
 										>
-											{line}
-										</span>
 									{/each}
 								</div>
 							{/if}
@@ -114,8 +111,8 @@
 								}}
 								on:introend={() => onLargeTextAnimationEnd()}
 							>
-								<span class="whitespace-nowrap">Code + </span>
-								<span class="whitespace-nowrap">Design +</span>
+								<span class="whitespace-nowrap">Web & Mobile</span>
+								<!-- <span class="whitespace-nowrap">For the modern</span> -->
 							</p>
 							<p
 								class={largeHlClasses}
@@ -125,7 +122,7 @@
 									easing: backOut
 								}}
 							>
-								Quality.
+								Experiences
 							</p>
 						</div>
 					{/if}
@@ -147,9 +144,9 @@
 </div>
 
 <style lang="post-css">
-	:global(a) {
+	/* :global(a) {
 		display: none;
-	}
+	} */
 
 	.slide-fade {
 		opacity: 0;

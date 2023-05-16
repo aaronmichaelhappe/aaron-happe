@@ -49,7 +49,7 @@
 
 <!-- hamburger menu icon -->
 <div
-	class="pointer-events-none relative z-20 flex justify-end p-4 md:hidden"
+	class="pointer-events-none relative z-20 flex justify-end p-2 md:hidden"
 	on:click={toggleMenu}
 	on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMenu()}
 >
@@ -63,23 +63,23 @@
 		/>
 		<label
 			for="hamburger-checkbox"
-			class="hamburger-lines block h-8 w-10 cursor-pointer peer-checked:rotate-180 peer-checked:transform"
+			class="hamburger-lines block h-[1.25rem] w-8 cursor-pointer peer-checked:rotate-180 peer-checked:transform"
 		>
 			<span
-				class="line line1 absolute top-0 block h-0.5 w-10 bg-themegray-900 transition-transform duration-300 ease-in-out"
+				class="line line1 absolute top-0 block h-[.15rem] w-8 bg-themegray-900 transition-transform duration-300 ease-in-out"
 			/>
 			<span
-				class="line line2 absolute block h-0.5 w-10 bg-themegray-900 opacity-0 transition-opacity duration-300 ease-in-out"
+				class="line line2 absolute block h-[.15rem] w-8 bg-themegray-900 opacity-0 transition-opacity duration-300 ease-in-out"
 				style="top: calc(50% - 0.1rem);"
 			/>
 			<span
-				class="line line3 absolute bottom-0 block h-0.5 w-10 bg-themegray-900 transition-transform duration-300 ease-in-out"
+				class="line line3 absolute bottom-0 block h-[.15rem] w-8 bg-themegray-900 transition-transform duration-300 ease-in-out"
 			/>
 		</label>
 	</div>
 </div>
 
-<nav class={`${mobileMenuClasses}`}>
+<nav class={`${mobileMenuClasses} bg-none`}>
 	<ul class="flex flex-col pl-4 pt-4 text-lg md:flex-row md:justify-end md:pt-0 md:pl-0">
 		<div class="cursor-pointer pb-4">
 			<AnimatedUnderlinedLink
@@ -122,10 +122,10 @@
 
 <style>
 	.line1 {
-		transform: translateY(0.85rem) rotate(45deg);
+		transform: translateY(0.55rem) rotate(45deg);
 	}
 	.line3 {
-		transform: translateY(-0.9rem) rotate(-45deg);
+		transform: translateY(-0.6rem) rotate(-45deg);
 	}
 	.peer:checked ~ .hamburger-lines .line1 {
 		transform: none;

@@ -13,9 +13,13 @@
 </script>
 
 <div class={`fade ${fadeInText ? 'fade-in' : ''} relative inline-block`}>
-	<h1 class="inline-block whitespace-nowrap text-[2.5rem] sm:text-[3rem]">Aaron Happe</h1>
+	<h1
+		class="inline-block whitespace-nowrap text-[2rem] leading-[6rem] sm:mb-[3rem] sm:text-[3rem] sm:leading-[3rem]"
+	>
+		Happe Interactive
+	</h1>
 	<div class="relative top-[-.5rem] sm:top-0">
-		<SmileLogo class={`absolute -bottom-4 left-1/4 h-7 w-7 sm:h-10 sm:w-10`} />
+		<SmileLogo class={`absolute bottom-0 left-2/4 h-7 w-7 sm:bottom-4 sm:h-10 sm:w-10`} />
 	</div>
 </div>
 

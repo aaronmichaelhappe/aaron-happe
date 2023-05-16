@@ -2,42 +2,46 @@
 	import '../app.css';
 
 	import { fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
+	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { beforeNavigate } from '$app/navigation';
+
 	import { page } from '$app/stores';
+
+	import type { PageData } from './$types';
+	export let data: PageData;
 
 	let visible = false;
 	let previousId: string | null;
 	let routeId: string | null = null;
 
+	beforeNavigate(() => {
+		// document.body.classList.add('hideScroll');
+		// disable scroll handling on page navigation
+		// disableScrollHandling();
+	});
+
+	$: pathname = data.props.pathname;
+
 	$: {
 		if (routeId !== $page.route.id && $page.route.id !== '/') {
-			previousId = routeId;
 			visible = true;
 			setTimeout(() => (visible = false), 600);
+			routeId = $page.route.id;
 		}
 	}
 	// onMount if no mount and on hp dont run, first run
 </script>
 
-<div class="app min-h-screen w-full">
-	{#if visible}
-		<div class={`page-transition-cover fixed inset-0 z-20`}>
-			<div
-				in:fly={{ y: '-100%' }}
-				out:fly={{ y: '100%' }}
-				class={`custom-page-transition top-left absolute bottom-0 top-0 right-1/2  left-0
-				z-30 bg-primaryBlue`}
-			/>
-			<div
-				in:fly={{ y: '100%' }}
-				out:fly={{ y: '-100%' }}
-				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2 top-0 z-30 bg-primaryBlue`}
-			/>
+<div class="app w-full">
+	{#key pathname}
+		<div
+			in:fly={{ easing: cubicOut, y: 10, duration: 300, delay: 400 }}
+			out:fly={{ easing: cubicIn, y: -10, duration: 300 }}
+			class="site-slot w-full"
+		>
+			<slot />
 		</div>
-	{/if}
-	<div class="site-slot">
-		<slot />
-	</div>
+	{/key}
 </div>
 
 <style lang="postcss">
@@ -55,9 +59,5 @@
 
 	footer {
 		background-color: var(--themegray-900);
-	}
-
-	.custom-page-transition {
-		transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 </style>
