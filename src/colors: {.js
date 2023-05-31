@@ -1,5 +1,5 @@
 colors: {
-  themegray: {
+  themeWarmGray: {
     900: '#020202',
       800: '#191919',
         700: '#2b2a2b',

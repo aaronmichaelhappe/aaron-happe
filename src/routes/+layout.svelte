@@ -48,16 +48,16 @@
 	.app {
 		display: flex;
 		flex-direction: column;
-		background-color: var(--themegray-900);
+		background-color: var(--themeGray-900);
 	}
 
 	.site-slot {
 		flex: 1;
-		background-color: var(--themegray-900);
+		background-color: var(--themeGray-900);
 		@apply w-full;
 	}
 
 	footer {
-		background-color: var(--themegray-900);
+		background-color: var(--themeGray-900);
 	}
 </style>

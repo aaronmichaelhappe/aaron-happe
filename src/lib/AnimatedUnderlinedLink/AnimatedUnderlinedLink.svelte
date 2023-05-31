@@ -27,7 +27,7 @@
 		: classNames('inline-block', $$props.class);
 	$: nameClasses = classNames('h-auto', customNameClasses);
 	$: lineClasses = classNames(
-		'underline-line inline-block bg-themegray-900',
+		'underline-line inline-block bg-themeGray-900',
 		`h-[${lineHeight}] `,
 		customLineClasses
 	);

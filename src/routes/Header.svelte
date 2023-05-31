@@ -17,7 +17,7 @@
 		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
 		mobileMenuClasses = isMdOrAbove
 			? ''
-			: ` fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-1/2 top-0 h-[100vh] bg-themegray-100 transition-transform duration-300 ease-in-out ${
+			: ` fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-1/2 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
 					menuOpen ? 'transform-none' : '-translate-x-[100%]'
 			  } md:flex`;
 	}
@@ -66,14 +66,14 @@
 			class="hamburger-lines block h-[1.25rem] w-8 cursor-pointer peer-checked:rotate-180 peer-checked:transform"
 		>
 			<span
-				class="line line1 absolute top-0 block h-[.15rem] w-8 bg-themegray-900 transition-transform duration-300 ease-in-out"
+				class="line line1 absolute top-0 block h-[.15rem] w-8 bg-themeGray-900 transition-transform duration-300 ease-in-out"
 			/>
 			<span
-				class="line line2 absolute block h-[.15rem] w-8 bg-themegray-900 opacity-0 transition-opacity duration-300 ease-in-out"
+				class="line line2 absolute block h-[.15rem] w-8 bg-themeGray-900 opacity-0 transition-opacity duration-300 ease-in-out"
 				style="top: calc(50% - 0.1rem);"
 			/>
 			<span
-				class="line line3 absolute bottom-0 block h-[.15rem] w-8 bg-themegray-900 transition-transform duration-300 ease-in-out"
+				class="line line3 absolute bottom-0 block h-[.15rem] w-8 bg-themeGray-900 transition-transform duration-300 ease-in-out"
 			/>
 		</label>
 	</div>

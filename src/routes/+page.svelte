@@ -7,7 +7,7 @@
 	import AaronHappeLogo from '../lib/AaronHappeLogo.svelte';
 	import Header from './Header.svelte';
 
-	import LpSection from './LpSection.svelte';
+	import ScrollSection from './ScrollSection.svelte';
 	import Work from './Work.svelte';
 
 	let startAnimation = false;
@@ -18,15 +18,16 @@
 	// let largeHlClasses =
 	// 	'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[6rem] sm:leading-[6rem] md:text-[7rem] md:leading-[7rem] lg:text-[9rem] lg:leading-[9rem]';
 	let largeHlClasses =
-		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12vw] leading-[12vw]';
+		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlClasses =
-		'mr-2 inline-block text-[1.5rem] font-extrabold leading-[1.5rem] text-white sm:text-[4vw] sm:leading-[4vw]  md:text-[4vw] md:leading-[4vw]';
+		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
+
 	let currentSection = '';
 	let workEl: HTMLDivElement | null;
 	let aboutEl: HTMLDivElement | null;
 	let headerWrapperEl: HTMLDivElement | null;
 
-	const headlines = ['Slick.', '', 'modern.', ' ', 'apps.'];
+	const headlines = ['Slick.', '', 'Modern.', ' ', 'Stylish.'];
 
 	onMount(() => {
 		startAnimation = true;
@@ -57,19 +58,24 @@
 <svelte:window on:scroll={() => (userHasScrolled = true)} />
 
 <div class="navigating-overlay h-screen">
-	<div class="relative h-[80vh] xs:h-[85vh]">
-		<div class="mx-auto max-w-[1300px]">
-			<div class="mx-auto max-w-[1300px]">
+	<div class="relative h-[90vh]">
+		<div class="mx-auto max-w-[1500px]">
+			<div class="mx-auto max-w-[1500px]">
 				{#if startAnimation}
 					<div
-						class="absolute inset-0 z-0 h-[80vh] bg-primaryPink xs:h-[85vh]"
+						style={`${
+							userHasScrolled
+								? 'background-color: #eeeeee;'
+								: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
+						}`}
+						class={`absolute inset-0 z-0 h-[90vh] transition-all duration-700 ease-in-out`}
 						in:fly={{ y: '100%' }}
 						on:introend={() => onIntroAnimationEnd()}
 					/>
 				{/if}
 				<div
 					bind:this={headerWrapperEl}
-					class={`duration-400 relative z-30 bg-primaryPink px-4 pt-4 transition-all ease-in-out md:sticky md:top-0 ${
+					class={`duration-400 relative z-30 px-4 pt-4 transition-all ease-in-out md:sticky md:top-0 ${
 						startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'
 					}`}
 				>
@@ -82,14 +88,15 @@
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
-								<div class="mb-2 sm:mb-4">
-									<span class={smallHlClasses + ' invisible'}>web & mobile apps.</span>
+								<div class="size-placholder-text ">
+									<span class={smallHlClasses + ' invisible'}>web & mobile experiences.</span>
 								</div>
 							{:else}
-								<div class="mb-2 sm:mb-4">
+								<div>
 									{#each headlines as line, i}
 										<span
-											class={smallHlClasses}
+											style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
+											class={`duration-750 transition-color ease-in-out ${smallHlClasses}`}
 											in:fly={{
 												y: 100,
 												delay: 250 * i,
@@ -130,16 +137,24 @@
 			</div>
 		</div>
 	</div>
-	<div id="work" bind:this={workEl}>
-		<LpSection
+	<div bind:this={workEl} class="h-[10vh]">
+		<div id="work" class="mx-auto h-[10vh] max-w-[1500px] pt-1">
+			<h4
+				class={`transition ${
+					startAnimation ? 'transition-in' : ''
+				}  px-2 text-[2rem] font-bold text-white sm:px-4 sm:text-left sm:text-[3rem]`}
+			>
+				Work
+			</h4>
+		</div>
+		<ScrollSection
 			on:inview={(e) => handleInView(e)}
-			title="My Work"
 			name="work"
 			{currentSection}
 			sectionEl={workEl}
 		>
 			<Work />
-		</LpSection>
+		</ScrollSection>
 	</div>
 </div>
 

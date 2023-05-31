@@ -14,12 +14,13 @@
 
 <div class={`fade ${fadeInText ? 'fade-in' : ''} relative inline-block`}>
 	<h1
-		class="inline-block whitespace-nowrap text-[2rem] leading-[6rem] sm:mb-[3rem] sm:text-[3rem] sm:leading-[3rem]"
+		class="relative z-20 inline-block whitespace-nowrap text-[2.5rem] leading-[6rem] text-themeWarmGray-900 sm:mb-[3rem] sm:text-[3rem] sm:leading-[3rem]"
 	>
-		Happe Interactive
+		Aaron Happe
 	</h1>
-	<div class="relative top-[-.5rem] sm:top-0">
-		<SmileLogo class={`absolute bottom-0 left-2/4 h-7 w-7 sm:bottom-4 sm:h-10 sm:w-10`} />
+
+	<div class="relative top-[-.75rem] sm:top-[-.1rem]">
+		<SmileLogo class={` absolute -bottom-1 left-1/4 h-7 w-7 sm:bottom-4 sm:h-10 sm:w-10`} />
 	</div>
 </div>
 
