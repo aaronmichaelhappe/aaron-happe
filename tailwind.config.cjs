@@ -45,6 +45,7 @@ const config = {
         themeRedOrange: '#ea7e3f',
         themeOrange: '#f7a440',
         themeYellow: '#f7cc2c',
+        themeBlue: '#4573b9',
         // primaryPink: '#FF2F65',
         // primaryPurple: '#73268B',
         // primaryBlue: '#5570B6',

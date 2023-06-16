@@ -15,7 +15,7 @@
 	}
 </script>
 
-<section class="section-work mx-auto max-w-[1500px]">
+<section class="section-work mx-auto max-w-[1500px] pt-2">
 	<div
 		use:inview={{ threshold: 0.2 }}
 		on:inview_change={() => handleInView(name)}

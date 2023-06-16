@@ -48,12 +48,10 @@
 	.app {
 		display: flex;
 		flex-direction: column;
-		background-color: var(--themeGray-900);
 	}
 
 	.site-slot {
 		flex: 1;
-		background-color: var(--themeGray-900);
 		@apply w-full;
 	}
 

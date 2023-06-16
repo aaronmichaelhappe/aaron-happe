@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import AnimatedUnderlinedLink from '../lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
+	import AnimatedUnderlinedLink from '$lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
+
+	import AaronHappeLogo from '$lib/AaronHappeLogo.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	export let currentSection = '';
+	export let userHasScrolled = false;
 
 	let workEl: any;
 	let aboutEl: any;
@@ -17,7 +20,7 @@
 		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
 		mobileMenuClasses = isMdOrAbove
 			? ''
-			: ` fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-1/2 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
+			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-1/2 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
 					menuOpen ? 'transform-none' : '-translate-x-[100%]'
 			  } md:flex`;
 	}
@@ -80,6 +83,12 @@
 </div>
 
 <nav class={`${mobileMenuClasses} bg-none`}>
+	{#if userHasScrolled}
+		<div class={`${userHasScrolled ? 'hidden md:flex' : 'hidden'}`}>
+			<AaronHappeLogo position="fixed" scale="half" />
+		</div>
+	{/if}
+
 	<ul class="flex flex-col pl-4 pt-4 text-lg md:flex-row md:justify-end md:pt-0 md:pl-0">
 		<div class="cursor-pointer pb-4">
 			<AnimatedUnderlinedLink
