@@ -2,32 +2,50 @@
 	import { backOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { scrollToSection } from '../composables/scrollToSection';
-	import { myGotoName } from './store';
-	import AaronHappeLogo from '../lib/AaronHappeLogo.svelte';
-	import Header from './Header.svelte';
+	//
+	import * as feather from 'feather-icons';
+	//
+	import { scrollToSection } from '$lib/helpers/scrollToSection';
+	//
+	import LogoBlock from './(Sections)/LogoBlock.svelte';
+	import Header from './(Sections)/Header.svelte';
+	import ScrollSection from './(ScrollSections)/ScrollSection.svelte';
+	import Work from './(ScrollSections)/Work.svelte';
 
-	import ScrollSection from './ScrollSection.svelte';
-	import Work from './Work.svelte';
+	const headlines = ['Slick.', '', 'Accessible.', ' ', 'Modern.'];
 
-	let startAnimation = false;
+	let scrollY = 0;
+	let userHasScrolled = false;
 	let introEnd = false;
 	let largeTextAnimationFinished = false;
-	let smallTextAnimationFinished = false;
-	let userHasScrolled = false;
-	// let largeHlClasses =
-	// 	'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[6rem] sm:leading-[6rem] md:text-[7rem] md:leading-[7rem] lg:text-[9rem] lg:leading-[9rem]';
+	let startAnimation = false;
+
 	let largeHlClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlClasses =
 		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
 
 	let currentSection = '';
+
+	let downIconSvg = feather.icons['chevrons-down'].toSvg({
+		stroke: '#f7a440',
+		width: 28,
+		height: 28
+	});
+	let mailIconSvg = feather.icons['mail'].toSvg({ stroke: '#fff', width: 36, height: 36 });
+
 	let workEl: HTMLDivElement | null;
 	let aboutEl: HTMLDivElement | null;
 	let headerWrapperEl: HTMLDivElement | null;
 
-	const headlines = ['Slick.', '', 'Modern.', ' ', 'Stylish.'];
+	$: {
+		scrollY = window.scrollY;
+		userHasScrolled = scrollY > 100;
+	}
+
+	$: headerWrapperClasses = `duration-400 absolute right-0 z-30 block px-4 pt-4 pb-2 transition-all ease-in-out md:top-0 ${
+		userHasScrolled ? 'sticky' : ''
+	} ${startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'}`;
 
 	onMount(() => {
 		startAnimation = true;
@@ -55,41 +73,38 @@
 	}
 </script>
 
-<svelte:window on:scroll={() => (userHasScrolled = true)} />
+<svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
 
 <div class="navigating-overlay h-screen">
 	<div class="relative h-[90vh]">
 		<div class="mx-auto max-w-[1500px]">
-			<div class="mx-auto max-w-[1500px]">
-				{#if startAnimation}
-					<div
-						style={`${
-							userHasScrolled
-								? 'background-color: #eeeeee;'
-								: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
-						}`}
-						class={`absolute inset-0 z-0 h-[90vh] transition-all duration-700 ease-in-out`}
-						in:fly={{ y: '100%' }}
-						on:introend={() => onIntroAnimationEnd()}
-					/>
-				{/if}
+			<!-- intro background graident -->
+			{#if startAnimation}
 				<div
-					bind:this={headerWrapperEl}
-					class={`duration-400 relative z-30 px-4 pt-4 transition-all ease-in-out md:sticky md:top-0 ${
-						startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'
+					style={`${
+						userHasScrolled
+							? 'background-color: #fff;'
+							: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
 					}`}
-				>
-					<Header {currentSection} on:scrollto={handleScrollTo} />
-				</div>
+					class={`absolute inset-0 z-0 h-[90vh] transition-all duration-700 ease-in-out`}
+					in:fly={{ y: '100%' }}
+					on:introend={() => onIntroAnimationEnd()}
+				/>
+			{/if}
+
+			<div bind:this={headerWrapperEl} class={headerWrapperClasses}>
+				<Header {currentSection} on:scrollto={handleScrollTo} {userHasScrolled} />
 			</div>
+
 			<div class="relative p-4">
-				<AaronHappeLogo />
+				<LogoBlock {userHasScrolled} />
+
 				<div class="flex flex-col overflow-hidden">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
 								<div class="size-placholder-text ">
-									<span class={smallHlClasses + ' invisible'}>web & mobile experiences.</span>
+									<span class={smallHlClasses + ' invisible'}>Slick. Accessible. Current.</span>
 								</div>
 							{:else}
 								<div>
@@ -101,8 +116,7 @@
 												y: 100,
 												delay: 250 * i,
 												easing: backOut
-											}}
-											on:introend={() => (smallTextAnimationFinished = true)}>{line}</span
+											}}>{line}</span
 										>
 									{/each}
 								</div>
@@ -118,7 +132,7 @@
 								}}
 								on:introend={() => onLargeTextAnimationEnd()}
 							>
-								<span class="whitespace-nowrap">Web & Mobile</span>
+								<span class="whitespace-nowrap">Web Design &</span>
 								<!-- <span class="whitespace-nowrap">For the modern</span> -->
 							</p>
 							<p
@@ -129,7 +143,7 @@
 									easing: backOut
 								}}
 							>
-								Experiences
+								Development
 							</p>
 						</div>
 					{/if}
@@ -137,16 +151,29 @@
 			</div>
 		</div>
 	</div>
+	<!-- Sections -->
 	<div bind:this={workEl} class="h-[10vh]">
-		<div id="work" class="mx-auto h-[10vh] max-w-[1500px] pt-1">
-			<h4
-				class={`transition ${
-					startAnimation ? 'transition-in' : ''
-				}  px-2 text-[2rem] font-bold text-white sm:px-4 sm:text-left sm:text-[3rem]`}
-			>
-				Work
-			</h4>
+		<div
+			id="work"
+			class="mx-auto flex h-[10vh] w-full max-w-[1500px] items-center justify-between pt-1 "
+		>
+			<div class="flex items-center">
+				<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+				<h4
+					class={`section-header transition ${
+						startAnimation ? 'transition-in' : ''
+					}  pl-1 text-[2rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
+				>
+					Work
+				</h4>
+			</div>
 		</div>
+		<div
+			class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
+		>
+			{@html mailIconSvg}
+		</div>
+
 		<ScrollSection
 			on:inview={(e) => handleInView(e)}
 			name="work"
@@ -159,17 +186,20 @@
 </div>
 
 <style lang="post-css">
-	/* :global(a) {
-		display: none;
-	} */
-
-	.slide-fade {
-		opacity: 0;
-		transform: translateY(8rem);
-		transition: all 0.4s ease-in-out;
+	@media (min-width: 768px) {
+		.sticky {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 50;
+			background-color: white;
+			box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+		}
 	}
-	.slide-fade.slide-fade-in {
-		opacity: 100;
-		transform: translateY(0);
+	.section-header {
+		background: linear-gradient(to right, #f7cc2c, #f7a440);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 </style>
