@@ -3,14 +3,15 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	//
-	import * as feather from 'feather-icons';
-	//
 	import { scrollToSection } from '$lib/helpers/scrollToSection';
 	//
 	import LogoBlock from './(Sections)/LogoBlock.svelte';
 	import Header from './(Sections)/Header.svelte';
 	import ScrollSection from './(ScrollSections)/ScrollSection.svelte';
 	import Work from './(ScrollSections)/Work.svelte';
+	//
+	import * as feather from 'feather-icons';
+	import classNames from 'classnames';
 
 	const headlines = ['Slick.', '', 'Accessible.', ' ', 'Modern.'];
 
@@ -20,12 +21,11 @@
 	let largeTextAnimationFinished = false;
 	let startAnimation = false;
 
+	let currentSection = '';
 	let largeHlClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlClasses =
 		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
-
-	let currentSection = '';
 
 	let downIconSvg = feather.icons['chevrons-down'].toSvg({
 		stroke: '#f7a440',
@@ -34,18 +34,23 @@
 	});
 	let mailIconSvg = feather.icons['mail'].toSvg({ stroke: '#fff', width: 36, height: 36 });
 
-	let workEl: HTMLDivElement | null;
-	let aboutEl: HTMLDivElement | null;
-	let headerWrapperEl: HTMLDivElement | null;
+	let workEl: HTMLElement | null;
+	let aboutEl: HTMLElement | null;
+	let headerWrapperEl: HTMLElement | null;
 
 	$: {
 		scrollY = window.scrollY;
 		userHasScrolled = scrollY > 100;
 	}
 
-	$: headerWrapperClasses = `duration-400 absolute right-0 z-30 block px-4 pt-4 pb-2 transition-all ease-in-out md:top-0 ${
-		userHasScrolled ? 'sticky' : ''
-	} ${startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'}`;
+	$: headerWrapperClasses = classNames(
+		'duration-400 absolute right-0 z-30 block px-4 pt-4 pb-2 transition-all ease-in-out md:top-0',
+		{
+			sticky: userHasScrolled,
+			'transform-none opacity-100': startAnimation,
+			'-translate-y-8 opacity-0': !startAnimation
+		}
+	);
 
 	onMount(() => {
 		startAnimation = true;
@@ -64,6 +69,9 @@
 		scrollToSection(map[mapKey]);
 	}
 
+	function handleSectionHeaderClick(headerElement: HTMLElement | null) {
+		scrollToSection(headerElement as HTMLElement);
+	}
 	function onIntroAnimationEnd() {
 		introEnd = true;
 	}
@@ -97,14 +105,16 @@
 			</div>
 
 			<div class="relative p-4">
-				<LogoBlock {userHasScrolled} />
+				<div class="mb-[2rem] sm:mb-0">
+					<LogoBlock {userHasScrolled} />
+				</div>
 
 				<div class="flex flex-col overflow-hidden">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
 								<div class="size-placholder-text ">
-									<span class={smallHlClasses + ' invisible'}>Slick. Accessible. Current.</span>
+									<span class={smallHlClasses + ' invisible'}>Slick. Accessible. Modern.</span>
 								</div>
 							{:else}
 								<div>
@@ -162,7 +172,14 @@
 				<h4
 					class={`section-header transition ${
 						startAnimation ? 'transition-in' : ''
-					}  pl-1 text-[2rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
+					} cursor-pointer pl-1 text-[2rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
+					on:click={() => handleSectionHeaderClick(workEl)}
+					on:keypress={(event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							handleSectionHeaderClick(workEl);
+						}
+					}}
+					tabindex="-1"
 				>
 					Work
 				</h4>

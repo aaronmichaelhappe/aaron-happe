@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import AnimatedUnderlinedLink from '$lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
-
-	import AaronHappeLogo from '$lib/AaronHappeLogo.svelte';
 	import { createEventDispatcher } from 'svelte';
+	//
+	import AnimatedUnderlinedLink from '$lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
+	//
+	import HeaderLogoBlock from './HeaderLogoBlock.svelte';
 
 	export let currentSection = '';
 	export let userHasScrolled = false;
@@ -85,7 +86,9 @@
 <nav class={`${mobileMenuClasses} bg-none`}>
 	{#if userHasScrolled}
 		<div class={`${userHasScrolled ? 'hidden md:flex' : 'hidden'}`}>
-			<AaronHappeLogo position="fixed" scale="half" />
+			<div class="absolute">
+				<HeaderLogoBlock />
+			</div>
 		</div>
 	{/if}
 
