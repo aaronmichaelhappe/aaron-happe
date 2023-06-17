@@ -40,6 +40,7 @@
 	function handleScrollTo(event: CustomEvent, index: number) {
 		stuckItem = event.detail.to;
 		dispatch('scrollto', event.detail.to);
+		toggleMenu();
 	}
 
 	function toggleMenu() {
@@ -57,7 +58,7 @@
 	on:click={toggleMenu}
 	on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMenu()}
 >
-	<div class="pointer-events-auto relative ">
+	<div class="pointer-events-auto fixed ">
 		<input
 			type="checkbox"
 			bind:this={checkbox}

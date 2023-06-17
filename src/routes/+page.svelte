@@ -83,7 +83,7 @@
 
 <svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
 
-<div class="navigating-overlay h-screen">
+<main class="navigating-overlay h-screen">
 	<div class="relative h-[90vh]">
 		<div class="mx-auto max-w-[1500px]">
 			<!-- intro background graident -->
@@ -162,7 +162,8 @@
 		</div>
 	</div>
 	<!-- Sections -->
-	<div bind:this={workEl} class="h-[10vh]">
+	<section bind:this={workEl} class="h-[10vh]">
+		<!-- Work Title -->
 		<div
 			id="work"
 			class="mx-auto flex h-[10vh] w-full max-w-[1500px] items-center justify-between pt-1 "
@@ -172,7 +173,7 @@
 				<h4
 					class={`section-header transition ${
 						startAnimation ? 'transition-in' : ''
-					} cursor-pointer pl-1 text-[2rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
+					} cursor-pointer pl-1 text-[2.5rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
 					on:click={() => handleSectionHeaderClick(workEl)}
 					on:keypress={(event) => {
 						if (event.key === 'Enter' || event.key === ' ') {
@@ -199,8 +200,8 @@
 		>
 			<Work />
 		</ScrollSection>
-	</div>
-</div>
+	</section>
+</main>
 
 <style lang="post-css">
 	@media (min-width: 768px) {
