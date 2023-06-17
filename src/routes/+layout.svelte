@@ -1,55 +1,61 @@
 <script lang="ts">
 	import '../app.css';
-	import { isNavigating } from './store';
 
-	let navTransitionHold = true;
+	import { fly } from 'svelte/transition';
+	import { cubicIn, cubicOut } from 'svelte/easing';
+	import { beforeNavigate } from '$app/navigation';
 
-	// $: !navTransitionHold ? goto(`/${myGotoNameValue}`) : '';
-	let navigating = false;
+	import { page } from '$app/stores';
+
+	import type { PageData } from './$types';
+	export let data: PageData;
+
+	let visible = false;
+	let previousId: string | null;
+	let routeId: string | null = null;
+
+	beforeNavigate(() => {
+		// document.body.classList.add('hideScroll');
+		// disable scroll handling on page navigation
+		// disableScrollHandling();
+	});
+
+	$: pathname = data.props.pathname;
+
 	$: {
-		navigating = $isNavigating;
-		if (navigating) setTimeout(() => (navTransitionHold = false), 300);
+		if (routeId !== $page.route.id && $page.route.id !== '/') {
+			visible = true;
+			setTimeout(() => (visible = false), 600);
+			routeId = $page.route.id;
+		}
 	}
+	// onMount if no mount and on hp dont run, first run
 </script>
 
-<div class="app min-h-screen w-full">
-	{#if navigating}
-		<div class={`page-transition-cover fixed inset-0 z-20`}>
-			<div
-				class={`custom-page-transition top-left absolute top-0 right-1/2 left-0 ${
-					navTransitionHold ? 'bottom-full' : ' bottom-0'
-				} z-30 bg-primaryBlue`}
-			/>
-			<div
-				class={`custom-page-transition bottom-right absolute right-0 bottom-0 left-1/2  ${
-					navTransitionHold ? 'top-full' : 'top-0'
-				} z-30 bg-primaryBlue`}
-			/>
+<div class="app w-full">
+	{#key pathname}
+		<div
+			in:fly={{ easing: cubicOut, y: 10, duration: 300, delay: 400 }}
+			out:fly={{ easing: cubicIn, y: -10, duration: 300 }}
+			class="site-slot w-full"
+		>
+			<slot />
 		</div>
-	{/if}
-	<div class="site-slot">
-		<slot />
-	</div>
+	{/key}
 </div>
 
 <style lang="postcss">
 	.app {
 		display: flex;
 		flex-direction: column;
-		background-color: var(--themegray-900);
 	}
 
 	.site-slot {
 		flex: 1;
-		background-color: var(--themegray-900);
 		@apply w-full;
 	}
 
 	footer {
-		background-color: var(--themegray-900);
-	}
-
-	.custom-page-transition {
-		transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+		background-color: var(--themeGray-900);
 	}
 </style>

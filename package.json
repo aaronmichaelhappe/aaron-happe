@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
+		"prv": "vite prv",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
@@ -17,6 +17,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@types/feather-icons": "^4.29.1",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.28.0",
@@ -37,9 +38,9 @@
 	"dependencies": {
 		"@popperjs/core": "^2.11.6",
 		"classnames": "^2.3.2",
+		"feather-icons": "^4.29.0",
 		"flowbite": "^1.6.4",
 		"flowbite-svelte": "^0.34.1",
-		"iconify-icon": "^1.0.7",
 		"svelte-inview": "^4.0.0"
 	},
 	"type": "module"

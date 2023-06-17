@@ -2,29 +2,55 @@
 	import { backOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { scrollToSection } from '../composables/scrollToSection';
-	import { myGotoName } from './store';
-	import AaronHappeLogo from '../lib/AaronHappeLogo.svelte';
-	import Header from './Header.svelte';
+	//
+	import { scrollToSection } from '$lib/helpers/scrollToSection';
+	//
+	import LogoBlock from './(Sections)/LogoBlock.svelte';
+	import Header from './(Sections)/Header.svelte';
+	import ScrollSection from './(ScrollSections)/ScrollSection.svelte';
+	import Work from './(ScrollSections)/Work.svelte';
+	//
+	import * as feather from 'feather-icons';
+	import classNames from 'classnames';
 
-	import LpSection from './LpSection.svelte';
-	import Work from './Work.svelte';
+	const headlines = ['Slick.', '', 'Accessible.', ' ', 'Modern.'];
 
-	let startAnimation = false;
+	let scrollY = 0;
+	let userHasScrolled = false;
 	let introEnd = false;
 	let largeTextAnimationFinished = false;
-	let smallTextAnimationFinished = false;
-	let userHasScrolled = false;
-	let largeHlClasses =
-		'translate-x-[100] font-extrabold uppercase  text-[3.5rem] leading-[3.5rem] sm:text-[4.5rem] sm:leading-[4.5rem] lg:text-[5.5rem] lg:leading-[5.5rem] xl:text-[7rem] xl:leading-[7rem]';
-	let smallHlClasses =
-		'mr-2 inline-block text-[1.75rem] font-extrabold leading-[1.75rem] text-white sm:text-[2.25rem] sm:leading-[2.25rem] md:text-[2.5rem] md:leading-[2.5rem] lg:text-[3rem] lg:leading-[3rem] xl:text-[4rem] xl:leading-[4rem]';
-	let currentSection = '';
-	let workEl: HTMLDivElement | null;
-	let aboutEl: HTMLDivElement | null;
-	let headerWrapperEl: HTMLDivElement | null;
+	let startAnimation = false;
 
-	const headlines = ['mobile apps.', ' ', 'web apps.', ' ', 'web pages.'];
+	let currentSection = '';
+	let largeHlClasses =
+		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
+	let smallHlClasses =
+		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
+
+	let downIconSvg = feather.icons['chevrons-down'].toSvg({
+		stroke: '#f7a440',
+		width: 28,
+		height: 28
+	});
+	let mailIconSvg = feather.icons['mail'].toSvg({ stroke: '#fff', width: 36, height: 36 });
+
+	let workEl: HTMLElement | null;
+	let aboutEl: HTMLElement | null;
+	let headerWrapperEl: HTMLElement | null;
+
+	$: {
+		scrollY = window.scrollY;
+		userHasScrolled = scrollY > 100;
+	}
+
+	$: headerWrapperClasses = classNames(
+		'duration-400 absolute right-0 z-30 block px-4 pt-4 pb-2 transition-all ease-in-out md:top-0',
+		{
+			sticky: userHasScrolled,
+			'transform-none opacity-100': startAnimation,
+			'-translate-y-8 opacity-0': !startAnimation
+		}
+	);
 
 	onMount(() => {
 		startAnimation = true;
@@ -40,10 +66,12 @@
 		let map: { [key: string]: HTMLElement | null } = {
 			work: workEl
 		};
-
 		scrollToSection(map[mapKey]);
 	}
 
+	function handleSectionHeaderClick(headerElement: HTMLElement | null) {
+		scrollToSection(headerElement as HTMLElement);
+	}
 	function onIntroAnimationEnd() {
 		introEnd = true;
 	}
@@ -53,53 +81,53 @@
 	}
 </script>
 
-<svelte:window on:scroll={() => (userHasScrolled = true)} />
+<svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
 
-<div class="navigating-overlay h-screen">
-	<div class="relative h-[80vh] xs:h-[85vh]">
-		<div class="mx-auto max-w-[1300px]">
-			<div class="mx-auto max-w-[1300px]">
-				{#if startAnimation}
-					<div
-						class="absolute inset-0 z-0 h-[80vh] bg-primaryPink xs:h-[85vh]"
-						in:fly={{ y: '100%' }}
-						on:introend={() => onIntroAnimationEnd()}
-					/>
-				{/if}
+<main class="navigating-overlay h-screen">
+	<div class="relative h-[90vh]">
+		<div class="mx-auto max-w-[1500px]">
+			<!-- intro background graident -->
+			{#if startAnimation}
 				<div
-					bind:this={headerWrapperEl}
-					class={`duration-400 relative z-30 bg-primaryPink px-4 pt-4 transition-all ease-in-out md:sticky md:top-0 ${
-						startAnimation ? 'transform-none opacity-100' : '-translate-y-8 opacity-0'
+					style={`${
+						userHasScrolled
+							? 'background-color: #fff;'
+							: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
 					}`}
-				>
-					<Header {currentSection} on:scrollto={handleScrollTo} />
-				</div>
+					class={`absolute inset-0 z-0 h-[90vh] transition-all duration-700 ease-in-out`}
+					in:fly={{ y: '100%' }}
+					on:introend={() => onIntroAnimationEnd()}
+				/>
+			{/if}
+
+			<div bind:this={headerWrapperEl} class={headerWrapperClasses}>
+				<Header {currentSection} on:scrollto={handleScrollTo} {userHasScrolled} />
 			</div>
+
 			<div class="relative p-4">
-				<AaronHappeLogo />
-				<div class="flex flex-col overflow-hidden pt-6 ">
+				<div class="mb-[2rem] sm:mb-0">
+					<LogoBlock {userHasScrolled} />
+				</div>
+
+				<div class="flex flex-col overflow-hidden">
 					{#if introEnd}
 						<div>
 							{#if !largeTextAnimationFinished}
-								<div class="mb-2 sm:mb-4">
-									<span class={smallHlClasses + ' invisible'}>mobile apps.</span>
-									<span class={smallHlClasses + ' invisible'}>web apps.</span>
-									<span class={smallHlClasses + ' invisible'}>web pages.</span>
+								<div class="size-placholder-text ">
+									<span class={smallHlClasses + ' invisible'}>Slick. Accessible. Modern.</span>
 								</div>
 							{:else}
-								<div class="mb-2 sm:mb-4">
+								<div>
 									{#each headlines as line, i}
 										<span
-											class={smallHlClasses}
+											style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
+											class={`duration-750 transition-color ease-in-out ${smallHlClasses}`}
 											in:fly={{
 												y: 100,
 												delay: 250 * i,
 												easing: backOut
-											}}
-											on:introend={() => (smallTextAnimationFinished = true)}
+											}}>{line}</span
 										>
-											{line}
-										</span>
 									{/each}
 								</div>
 							{/if}
@@ -114,8 +142,8 @@
 								}}
 								on:introend={() => onLargeTextAnimationEnd()}
 							>
-								<span class="whitespace-nowrap">Code + </span>
-								<span class="whitespace-nowrap">Design +</span>
+								<span class="whitespace-nowrap">Web Design &</span>
+								<!-- <span class="whitespace-nowrap">For the modern</span> -->
 							</p>
 							<p
 								class={largeHlClasses}
@@ -125,7 +153,7 @@
 									easing: backOut
 								}}
 							>
-								Quality.
+								Development
 							</p>
 						</div>
 					{/if}
@@ -133,31 +161,63 @@
 			</div>
 		</div>
 	</div>
-	<div id="work" bind:this={workEl}>
-		<LpSection
+	<!-- Sections -->
+	<section bind:this={workEl} class="h-[10vh]">
+		<!-- Work Title -->
+		<div
+			id="work"
+			class="mx-auto flex h-[10vh] w-full max-w-[1500px] items-center justify-between pt-1 "
+		>
+			<div class="flex items-center">
+				<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+				<h4
+					class={`section-header transition ${
+						startAnimation ? 'transition-in' : ''
+					} cursor-pointer pl-1 text-[2.5rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
+					on:click={() => handleSectionHeaderClick(workEl)}
+					on:keypress={(event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							handleSectionHeaderClick(workEl);
+						}
+					}}
+					tabindex="-1"
+				>
+					Work
+				</h4>
+			</div>
+		</div>
+		<div
+			class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
+		>
+			{@html mailIconSvg}
+		</div>
+
+		<ScrollSection
 			on:inview={(e) => handleInView(e)}
-			title="My Work"
 			name="work"
 			{currentSection}
 			sectionEl={workEl}
 		>
 			<Work />
-		</LpSection>
-	</div>
-</div>
+		</ScrollSection>
+	</section>
+</main>
 
 <style lang="post-css">
-	:global(a) {
-		display: none;
+	@media (min-width: 768px) {
+		.sticky {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 50;
+			background-color: white;
+			box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+		}
 	}
-
-	.slide-fade {
-		opacity: 0;
-		transform: translateY(8rem);
-		transition: all 0.4s ease-in-out;
-	}
-	.slide-fade.slide-fade-in {
-		opacity: 100;
-		transform: translateY(0);
+	.section-header {
+		background: linear-gradient(to right, #f7cc2c, #f7a440);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 </style>

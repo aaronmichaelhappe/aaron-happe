@@ -1,5 +1,5 @@
 colors: {
-  themegray: {
+  themeWarmGray: {
     900: '#020202',
       800: '#191919',
         700: '#2b2a2b',
@@ -25,7 +25,7 @@ colors: {
                           lightenedPrimaryYellow: "#F5C062",
                             lightenedSecondaryBurntOrange: "#E5534F",
                               lightenedSecondaryPurple: "#D390C8",
-                                lightenedMutedPrimaryPurple: "##B57EB0",
+                                lightenedMutedPrimaryPurple: "#B57EB0",
                                   darkenedPrimaryPink: "#CC0047",
                                     darkenedPrimaryPurple: "#521E64",
                                       darkenedPrimaryGreen: "#4E8F28",
