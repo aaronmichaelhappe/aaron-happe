@@ -84,7 +84,7 @@
 <svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
 
 <main class="navigating-overlay h-screen">
-	<div class="relative h-[85vh] md:h-[90vh] ">
+	<div class="relative h-[70vh] sm:h-[90vh]">
 		<div class="mx-auto max-w-[1500px]">
 			<!-- intro background graident -->
 			{#if startAnimation}
@@ -94,7 +94,7 @@
 							? 'background-color: #fff;'
 							: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
 					}`}
-					class={`absolute inset-0 z-0 h-[85vh] transition-all duration-700 ease-in-out md:h-[90vh]`}
+					class={`absolute inset-0 z-0 h-[70vh] transition-all duration-700 ease-in-out sm:h-[90vh]`}
 					in:fly={{ y: '100%' }}
 					on:introend={() => onIntroAnimationEnd()}
 				/>
@@ -162,12 +162,12 @@
 		</div>
 	</div>
 	<!-- Sections -->
-	<section bind:this={workEl} class="h-[15vh] md:h-[10vh]">
+	<section bind:this={workEl} class="h-[30vh] sm:h-[10vh]">
 		<!-- Work Title -->
 
 		<div
 			id="work"
-			class="mx-auto flex h-[15vh] w-full max-w-[1500px] flex-col items-start justify-start pt-1 md:h-[10vh] md:flex-row md:items-center md:justify-between"
+			class="mx-auto flex h-[30vh] w-full max-w-[1500px] flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
 		>
 			<div class="flex items-center">
 				<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
