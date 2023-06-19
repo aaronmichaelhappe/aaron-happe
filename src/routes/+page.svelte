@@ -15,17 +15,24 @@
 
 	const headlines = ['Slick.', '', 'Accessible.', ' ', 'Modern.'];
 
+	import PortalndImg from '$lib/images/portland-painting.png';
+	import dogsImg from '$lib/images/jasper-fred.png';
+
 	let scrollY = 0;
 	let userHasScrolled = false;
 	let introEnd = false;
 	let largeTextAnimationFinished = false;
 	let startAnimation = false;
 
-	let currentSection = '';
-	let largeHlClasses =
+	$: currentSection = '';
+	let largeHlIDisplayClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
-	let smallHlClasses =
+	let smallHlDisplayClasses =
 		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
+	let h4WorkTitleClasses = classNames(
+		'section-header transition cursor-pointer pl-1 text-[2.5rem] font-bold  sm:text-[3rem]',
+		{ 'transition-in': startAnimation }
+	);
 
 	let downIconSvg = feather.icons['chevrons-down'].toSvg({
 		stroke: '#f7a440',
@@ -58,13 +65,14 @@
 
 	function handleInView(e: CustomEvent) {
 		if (!userHasScrolled) return;
-		currentSection = e.detail.view;
+		currentSection = e.detail.name;
 	}
 
 	function handleScrollTo(event: CustomEvent) {
 		let mapKey: string = event.detail;
 		let map: { [key: string]: HTMLElement | null } = {
-			work: workEl
+			work: workEl,
+			about: aboutEl
 		};
 		scrollToSection(map[mapKey]);
 	}
@@ -83,9 +91,9 @@
 
 <svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
 
-<main class="navigating-overlay h-screen">
-	<div class="relative h-[70vh] sm:h-[90vh]">
-		<div class="mx-auto max-w-[1500px]">
+<main class="navigating-overlay relative h-screen">
+	<div class="relative h-[100vh]">
+		<div class="mx-auto max-w-[1400px]">
 			<!-- intro background graident -->
 			{#if startAnimation}
 				<div
@@ -94,7 +102,7 @@
 							? 'background-color: #fff;'
 							: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
 					}`}
-					class={`absolute inset-0 z-0 h-[70vh] transition-all duration-700 ease-in-out sm:h-[90vh]`}
+					class={`absolute inset-0 z-0 h-[100vh] transition-all duration-700 ease-in-out`}
 					in:fly={{ y: '100%' }}
 					on:introend={() => onIntroAnimationEnd()}
 				/>
@@ -114,14 +122,16 @@
 						<div>
 							{#if !largeTextAnimationFinished}
 								<div class="size-placholder-text ">
-									<span class={smallHlClasses + ' invisible'}>Slick. Accessible. Modern.</span>
+									<span class={smallHlDisplayClasses + ' invisible'}
+										>Slick. Accessible. Modern.</span
+									>
 								</div>
 							{:else}
 								<div>
 									{#each headlines as line, i}
 										<span
 											style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
-											class={`duration-750 transition-color ease-in-out ${smallHlClasses}`}
+											class={`duration-750 transition-color ease-in-out ${smallHlDisplayClasses}`}
 											in:fly={{
 												y: 100,
 												delay: 250 * i,
@@ -134,7 +144,7 @@
 						</div>
 						<div>
 							<p
-								class={largeHlClasses}
+								class={largeHlIDisplayClasses}
 								in:fly={{
 									x: '-100%',
 									duration: 650,
@@ -146,7 +156,7 @@
 								<!-- <span class="whitespace-nowrap">For the modern</span> -->
 							</p>
 							<p
-								class={largeHlClasses}
+								class={largeHlIDisplayClasses}
 								in:fly={{
 									x: '100%',
 									duration: 650,
@@ -161,32 +171,31 @@
 			</div>
 		</div>
 	</div>
-	<!-- Sections -->
-	<section bind:this={workEl} class="h-[30vh] sm:h-[10vh]">
-		<!-- Work Title -->
 
-		<div
-			id="work"
-			class="mx-auto flex h-[30vh] w-full max-w-[1500px] flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
+	<!-- <div
+	class="mx-auto flex h-[30vh]  flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
+/> -->
+
+	<div class="absolute bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white">
+		<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+		<h4
+			bind:this={workEl}
+			class={`${h4WorkTitleClasses}`}
+			on:click={() => handleSectionHeaderClick(workEl)}
+			on:keypress={(event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					handleSectionHeaderClick(workEl);
+				}
+			}}
+			tabindex="-1"
 		>
-			<div class="flex items-center">
-				<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
-				<h4
-					class={`section-header transition ${
-						startAnimation ? 'transition-in' : ''
-					} cursor-pointer pl-1 text-[2.5rem] font-bold text-white  sm:text-left sm:text-[3rem]`}
-					on:click={() => handleSectionHeaderClick(workEl)}
-					on:keypress={(event) => {
-						if (event.key === 'Enter' || event.key === ' ') {
-							handleSectionHeaderClick(workEl);
-						}
-					}}
-					tabindex="-1"
-				>
-					Work
-				</h4>
-			</div>
-		</div>
+			Work
+		</h4>
+	</div>
+
+	<!-- Sections -->
+	<section>
+		<!-- Work Title -->
 		<div
 			class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
 		>
@@ -196,10 +205,81 @@
 		<ScrollSection
 			on:inview={(e) => handleInView(e)}
 			name="work"
+			id="work"
 			{currentSection}
 			sectionEl={workEl}
 		>
 			<Work />
+		</ScrollSection>
+	</section>
+	<section class="about-section mt-4 max-w-[1400px] p-4 sm:mt-8" bind:this={aboutEl}>
+		<ScrollSection
+			on:inview={(e) => handleInView(e)}
+			name="about"
+			id="about"
+			{currentSection}
+			sectionEl={aboutEl}
+		>
+			<div class="w-full text-center">
+				<h4
+					class={`${h4WorkTitleClasses} text-center`}
+					on:click={() => handleSectionHeaderClick(aboutEl)}
+					on:keypress={(event) => {
+						if (event.key === 'Enter' || event.key === ' ') {
+							handleSectionHeaderClick(aboutEl);
+						}
+					}}
+					tabindex="-1"
+				>
+					About
+				</h4>
+			</div>
+			<article class="mx-autopb-4 ">
+				<div class="mx-auto">
+					<aside
+						class="more mx-auto flex max-w-[1000px] flex-col gap-8 pb-4  md:flex-row md:gap-4  md:pb-4"
+					>
+						<div class="w-full md:w-2/3">
+							<h3>A litte about me.</h3>
+							<p>
+								I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and Fred.
+								I enjoy hiking, game nights with friends, and exploring local restaurants. Every
+								morning, I start my day by going for a jog either at the park or along the
+								riverfront, followed by meditation, before I begin work.
+							</p>
+
+							<p>
+								I have always had a passion for creating things. During my younger years, I enjoyed
+								building webpages. I also pursued my interests in painting, participated in design
+								contests, and even played in a couple of garage bands. I obtained my associate's
+								degree in Graphic Design, followed by a Master's degree in Fine Arts. Throughout my
+								academic journey and after graduation, I worked as a freelance designer and
+								eventually developer, while simultaneously teaching design.
+							</p>
+						</div>
+						<div class="w-full md:w-1/3">
+							<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
+								<img src={dogsImg} alt="Description 3" class="flex h-auto w-full object-cover" />
+							</div>
+						</div>
+					</aside>
+					<aside class=" w-full bg-themeBlue text-center">
+						<div class="mx-auto max-w-[1000px] p-6">
+							<h3 class="text-white">Career Summary</h3>
+							<p class="leading-7 text-white">
+								10+ years of industry experience, including 5+ years of experience in modern
+								JavaScript development with frontend frameworks (Web Apps, SPAs, PWAs, etc.).
+								Possess 1+ year of Fullstack experience. Proficient in collaborating effectively
+								within both in-person and remote teams, as well as working independently,
+								consistently delivering high-quality results for e-commerce, internal company tools,
+								and web applications. Additionally, have a background in art and graphic design,
+								keeping abreast of recent and emerging technologies and adhering to modern best
+								practices.
+							</p>
+						</div>
+					</aside>
+				</div>
+			</article>
 		</ScrollSection>
 	</section>
 </main>
@@ -218,6 +298,11 @@
 	}
 	.section-header {
 		background: linear-gradient(to right, #f7cc2c, #f7a440);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.about-section article .more {
+		background: linear-gradient(to top, #4573b9, #6495ed);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}

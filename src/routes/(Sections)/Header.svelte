@@ -15,13 +15,15 @@
 	let checkbox: HTMLInputElement;
 	let menuOpen = false;
 
+	let menuIncludes = ['work', 'about', 'blog'];
+
 	let mobileMenuClasses = '';
 
 	function updateMenuClasses() {
 		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
 		mobileMenuClasses = isMdOrAbove
 			? ''
-			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-1/2 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
+			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-2/3 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
 					menuOpen ? 'transform-none' : '-translate-x-[100%]'
 			  } md:flex`;
 	}
@@ -33,12 +35,13 @@
 
 	window.addEventListener('resize', updateMenuClasses);
 
-	$: stuckItem = currentSection;
+	let stuckItem = currentSection || '';
 
 	const dispatch = createEventDispatcher();
 
-	function handleScrollTo(event: CustomEvent, index: number) {
+	function handleScrollTo(event: CustomEvent) {
 		stuckItem = event.detail.to;
+		console.log(event.detail.to);
 		dispatch('scrollto', event.detail.to);
 		toggleMenu();
 	}
@@ -102,8 +105,8 @@
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
-				stuck={stuckItem === 'work'}
-				on:animatedlinkclicked={(e) => handleScrollTo(e, 0)}
+				on:animatedlinkclicked={(e) => handleScrollTo(e)}
+				on:unstickallsiblings={() => (stuckItem = 'work')}
 			/>
 		</div>
 		<div class="cursor-pointer pb-4 md:ml-8">
@@ -114,9 +117,21 @@
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
-				stuck={stuckItem === 'about'}
-				on:scrollto={(e) => handleScrollTo(e, 1)}
+				on:animatedlinkclicked={(e) => handleScrollTo(e)}
+				on:unstickallsiblings={() => (stuckItem = 'about')}
 			/>
+			<!-- <AnimatedUnderlinedLink
+			bind:this={aboutEl}
+			name="About"
+			lineColor="primaryPink"
+			customAClasses="pt-3"
+			customNameClasses="uppercase h-auto font-bold "
+			customLineClasses="h-[.16rem] inline-block"
+			stuckItem={'about'}
+			stuck={stuckItem === 'about'}
+			on:animatedlinkclicked={(e) => handleScrollTo(e)}
+			on:unstickallsiblings={() => (stuckItem = 'about')}
+		/> -->
 		</div>
 		<div class="cursor-pointer pb-4 md:ml-8">
 			<AnimatedUnderlinedLink
@@ -126,8 +141,8 @@
 				customAClasses="pt-3"
 				customNameClasses="uppercase h-auto font-bold "
 				customLineClasses="h-[.16rem] inline-block"
-				stuck={stuckItem === 'blog'}
-				on:scrollto={(e) => handleScrollTo(e, 2)}
+				stuck={stuckItem === 'work'}
+				on:unstickallsiblings={() => (stuckItem = 'blog')}
 			/>
 		</div>
 	</ul>

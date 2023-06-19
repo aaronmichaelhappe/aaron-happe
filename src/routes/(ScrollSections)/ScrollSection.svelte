@@ -3,8 +3,9 @@
 	import { inview } from 'svelte-inview';
 
 	export let currentSection = '';
-	export let sectionEl: HTMLDivElement | null;
+	export let sectionEl: HTMLElement | null = null;
 	export let name = '';
+	export let id = '';
 
 	const dispatch = createEventDispatcher();
 
@@ -20,6 +21,7 @@
 		use:inview={{ threshold: 0.2 }}
 		on:inview_change={() => handleInView(name)}
 		bind:this={sectionEl}
+		{id}
 	>
 		<div class={`cursor-pointer transition ${currentSection === name ? 'transition-in' : ''}`}>
 			<slot />

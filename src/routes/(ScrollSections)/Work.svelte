@@ -4,7 +4,7 @@
 	//
 	import { Accordion, AccordionItem } from 'flowbite-svelte';
 	//
-	import BzeesImg from '$lib/images/bzees.png';
+	import BzeesImg from '$lib/images/jasper-fred.png';
 	import PfImg1 from '$lib/images/promptfoolery-prv1.jpg';
 	import PfImg2 from '$lib/images/promptfoolery-prv2.jpg';
 	import PfImg1Md from '$lib/images/promptfoolery-prv1-md.jpg';
@@ -47,7 +47,7 @@
 		<div class="w-full lg:w-1/2">
 			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
 				<h3
-					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeOrange lg:mt-8 lg:text-left"
+					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
 				>
 					Promptfoolery
 				</h3>
@@ -75,11 +75,3 @@
 	<!-- Caleres -->
 	<!-- Web Apps -->
 </div>
-
-<style>
-	.section-header {
-		background: linear-gradient(to right, #f7cc2c, #f7a440);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-</style>

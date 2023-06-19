@@ -13,11 +13,13 @@
 	export let customLiClasses: undefined | string = undefined;
 	export let href: string | undefined = undefined;
 	export let stuck: boolean = false;
+	export let stuckItem: string = '';
 
 	$: {
-		if (stuck) {
+		if (stuck && stuckItem !== '') {
 			$size = 1;
 		} else {
+			console.log('UHUNUNSTUCK');
 			$size = 0;
 		}
 	}
@@ -41,11 +43,16 @@
 	});
 
 	export function animateLine(e: Event | null, enter: boolean) {
-		if (!stuck) {
+		if (stuckItem !== name.toLowerCase()) {
 			$size = enter ? 1 : 0;
 		}
 	}
+
 	function handleClick(event: MouseEvent) {
+		if (stuckItem === name.toLowerCase()) {
+			stuck = true;
+		}
+		dispatch('unstickallsiblings');
 		dispatch('animatedlinkclicked', { event, to: name.toLowerCase() });
 	}
 </script>
