@@ -19,19 +19,30 @@
 	import dogsImg from '$lib/images/jasper-fred.png';
 
 	let scrollY = 0;
-	let userHasScrolled = false;
 	let introEnd = false;
 	let largeTextAnimationFinished = false;
 	let startAnimation = false;
+	let userHasScrolledPlus100 = false;
+	let userHasScrolled = false;
 
 	$: currentSection = '';
 	let largeHlIDisplayClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlDisplayClasses =
 		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
-	let h4WorkTitleClasses = classNames(
+	let h4SectionTitleClasses = classNames(
 		'section-header transition cursor-pointer pl-1 text-[2.5rem] font-bold  sm:text-[3rem]',
 		{ 'transition-in': startAnimation }
+	);
+
+	$: workTitleWrapperClasses = classNames(
+		'bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white',
+		{ fixed: !userHasScrolled, hidden: userHasScrolled }
+	);
+
+	$: workTitleWrapperClasses2 = classNames(
+		'absolute bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white',
+		{ invisible: !userHasScrolled, visible: userHasScrolled }
 	);
 
 	let downIconSvg = feather.icons['chevrons-down'].toSvg({
@@ -52,13 +63,14 @@
 
 	$: {
 		scrollY = window.scrollY;
-		userHasScrolled = scrollY > 100;
+		userHasScrolledPlus100 = scrollY > 100;
+		userHasScrolled = scrollY > 0;
 	}
 
 	$: headerWrapperClasses = classNames(
 		'duration-400 absolute right-0 z-30 block px-4 pt-4 pb-2 transition-all ease-in-out md:top-0',
 		{
-			sticky: userHasScrolled,
+			sticky: userHasScrolledPlus100,
 			'transform-none opacity-100': startAnimation,
 			'-translate-y-8 opacity-0': !startAnimation
 		}
@@ -69,7 +81,7 @@
 	});
 
 	function handleInView(e: CustomEvent) {
-		if (!userHasScrolled) return;
+		if (!userHasScrolledPlus100) return;
 		currentSection = e.detail.name;
 	}
 
@@ -94,7 +106,10 @@
 	}
 </script>
 
-<svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
+<svelte:window
+	bind:scrollY
+	on:scroll={() => (scrollY > 100 ? (userHasScrolledPlus100 = true) : null)}
+/>
 <div class="navigating-overlay relative h-screen">
 	<main>
 		<div class="relative h-[100vh]">
@@ -103,7 +118,7 @@
 				{#if startAnimation}
 					<div
 						style={`${
-							userHasScrolled
+							userHasScrolledPlus100
 								? 'background-color: #fff;'
 								: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
 						}`}
@@ -114,12 +129,16 @@
 				{/if}
 
 				<div bind:this={headerWrapperEl} class={headerWrapperClasses}>
-					<Header {currentSection} on:scrollto={handleScrollTo} {userHasScrolled} />
+					<Header
+						{currentSection}
+						on:scrollto={handleScrollTo}
+						userHasScrolled={userHasScrolledPlus100}
+					/>
 				</div>
 
 				<div class="relative p-4">
 					<div class="mb-[2rem] sm:mb-0">
-						<LogoBlock {userHasScrolled} />
+						<LogoBlock userHasScrolled={userHasScrolledPlus100} />
 					</div>
 
 					<div class="flex flex-col overflow-hidden">
@@ -135,7 +154,7 @@
 									<div>
 										{#each headlines as line, i}
 											<span
-												style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
+												style={`${userHasScrolledPlus100 ? 'color: #1A1A1A;' : 'color: white;'}`}
 												class={`duration-750 transition-color ease-in-out ${smallHlDisplayClasses}`}
 												in:fly={{
 													y: 100,
@@ -181,11 +200,26 @@
 		class="mx-auto flex h-[30vh]  flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
 	/> -->
 
-		<div class="absolute bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white">
+		<div class={workTitleWrapperClasses}>
+			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<h4
+				class={`${h4SectionTitleClasses}`}
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}
+				tabindex="-1"
+			>
+				Work
+			</h4>
+		</div>
+		<div class={`${workTitleWrapperClasses2}`}>
 			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
 			<h4
 				bind:this={workEl}
-				class={`${h4WorkTitleClasses}`}
+				class={`${h4SectionTitleClasses}`}
 				on:click={() => handleSectionHeaderClick(workEl)}
 				on:keypress={(event) => {
 					if (event.key === 'Enter' || event.key === ' ') {
@@ -200,7 +234,6 @@
 
 		<!-- Sections -->
 		<section>
-			<!-- Work Title -->
 			<div
 				class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
 			>
@@ -227,7 +260,7 @@
 			>
 				<div class="w-full text-center">
 					<h4
-						class={`${h4WorkTitleClasses} text-center`}
+						class={`${h4SectionTitleClasses} text-center`}
 						on:click={() => handleSectionHeaderClick(aboutEl)}
 						on:keypress={(event) => {
 							if (event.key === 'Enter' || event.key === ' ') {
@@ -256,10 +289,9 @@
 								<p>
 									I have always had a passion for creating things. During my younger years, I
 									enjoyed building webpages. I also pursued my interests in painting, participated
-									in design contests, and even played in a couple of garage bands. I obtained my
-									associate's degree in Graphic Design, followed by a Master's degree in Fine Arts.
-									Throughout my academic journey and after graduation, I worked as a freelance
-									designer and eventually developer, while simultaneously teaching design.
+									in design contests, and even played in a couple of garage bands. I am a proactive
+									individual who has a passion for building, engineering and designing. Whether it's
+									software development or fine arts, I am consistently engaged in a project.
 								</p>
 							</div>
 							<div class="w-full md:w-1/3">
