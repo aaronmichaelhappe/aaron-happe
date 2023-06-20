@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 	//
+	import * as feather from 'feather-icons';
+	//
 	import AnimatedUnderlinedLink from '$lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
 	//
 	import HeaderLogoBlock from './HeaderLogoBlock.svelte';
@@ -18,6 +20,18 @@
 	let menuIncludes = ['work', 'about', 'blog'];
 
 	let mobileMenuClasses = '';
+
+	const gitIconSvg = feather.icons['github'].toSvg({
+		stroke: '#000',
+		width: 28,
+		height: 28
+	});
+
+	const linkedIconSvg = feather.icons['linkedin'].toSvg({
+		stroke: '#000',
+		width: 28,
+		height: 28
+	});
 
 	function updateMenuClasses() {
 		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
@@ -61,7 +75,7 @@
 	on:click={toggleMenu}
 	on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMenu()}
 >
-	<div class="pointer-events-auto fixed ">
+	<div class="pointer-events-auto fixed">
 		<input
 			type="checkbox"
 			bind:this={checkbox}
@@ -109,7 +123,7 @@
 				on:unstickallsiblings={() => (stuckItem = 'work')}
 			/>
 		</div>
-		<div class="cursor-pointer pb-4 md:ml-8">
+		<div class="cursor-pointer pb-4 md:ml-4 lg:ml-8">
 			<AnimatedUnderlinedLink
 				bind:this={aboutEl}
 				name="About"
@@ -133,7 +147,7 @@
 			on:unstickallsiblings={() => (stuckItem = 'about')}
 		/> -->
 		</div>
-		<div class="cursor-pointer pb-4 md:ml-8">
+		<div class="cursor-pointer pb-4 md:ml-4 lg:ml-8">
 			<AnimatedUnderlinedLink
 				bind:this={blogEl}
 				name="Blog"
@@ -145,6 +159,10 @@
 				on:unstickallsiblings={() => (stuckItem = 'blog')}
 			/>
 		</div>
+		<a class="md:ml-4 lg:ml-8" href="https://github.com/aaronmichaelhappe/">{@html gitIconSvg}</a>
+		<a class="md:ml-4" href="https://www.linkedin.com/in/aaron-happe-4741176a/"
+			>{@html linkedIconSvg}</a
+		>
 	</ul>
 </nav>
 

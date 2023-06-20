@@ -45,7 +45,10 @@ const config = {
         themeRedOrange: '#ea7e3f',
         themeOrange: '#f7a440',
         themeYellow: '#f7cc2c',
-        themeBlue: '#4573b9'
+        themeBlue: '#4573b9',
+        themeGreen: '#178793',
+        themeBlueGreen: '#3C9C9F',
+        themeBlueBlueGreen: '#2D8FAD'
       }
     },
   },

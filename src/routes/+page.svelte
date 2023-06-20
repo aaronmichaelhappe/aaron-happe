@@ -27,7 +27,7 @@
 
 	$: currentSection = '';
 	let largeHlIDisplayClasses =
-		'translate-x-[100] font-extrabold uppercase lg:text-[7.5rem] lg:leading-[7.5rem] text-[12.5vw] leading-[12.5vw]';
+		'translate-x-[100] font-extrabold uppercase lg:text-[6.5rem] lg:leading-[6.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlDisplayClasses =
 		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
 	let h4SectionTitleClasses = classNames(
@@ -45,17 +45,14 @@
 		{ invisible: !userHasScrolled, visible: userHasScrolled }
 	);
 
+	let titleWrapperClasses = classNames('flex w-full max-w-[1400px] items-center bg-white pb-2');
+
 	let downIconSvg = feather.icons['chevrons-down'].toSvg({
 		stroke: '#f7a440',
 		width: 28,
 		height: 28
 	});
 	let mailIconSvg = feather.icons['mail'].toSvg({ stroke: '#fff', width: 36, height: 36 });
-	let gitIconSvg = feather.icons['github'].toSvg({
-		stroke: '#f7a440',
-		width: 28,
-		height: 28
-	});
 
 	let workEl: HTMLElement | null;
 	let aboutEl: HTMLElement | null;
@@ -258,9 +255,10 @@
 				{currentSection}
 				sectionEl={aboutEl}
 			>
-				<div class="w-full text-center">
+				<div class={titleWrapperClasses}>
+					<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
 					<h4
-						class={`${h4SectionTitleClasses} text-center`}
+						class={`${h4SectionTitleClasses}`}
 						on:click={() => handleSectionHeaderClick(aboutEl)}
 						on:keypress={(event) => {
 							if (event.key === 'Enter' || event.key === ' ') {
@@ -272,20 +270,24 @@
 						About
 					</h4>
 				</div>
-				<article class="mx-auto pb-4 ">
+				<article class="mx-auto pb-4">
 					<div class="mx-auto">
 						<aside
-							class="more mx-auto flex max-w-[1000px] flex-col gap-8 pb-2  md:flex-row md:gap-4  md:pb-4"
+							class="more mx-auto flex max-w-[1000px] flex-col gap-8 md:flex-row md:gap-4  md:pb-4"
 						>
+							<div class="w-full md:w-1/3">
+								<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
+									<img src={dogsImg} alt="Description 3" class="flex h-auto w-full object-cover" />
+								</div>
+							</div>
 							<div class="w-full md:w-2/3">
-								<h3>A litte about me.</h3>
+								<h3 class="about-section-subheader">A little about me.</h3>
 								<p>
 									I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and
 									Fred. I enjoy hiking, game nights with friends, and exploring local restaurants.
 									Every morning, I start my day by going for a jog either at the park or along the
 									riverfront, followed by meditation, before I begin work.
 								</p>
-
 								<p>
 									I have always had a passion for creating things. During my younger years, I
 									enjoyed building webpages. I also pursued my interests in painting, participated
@@ -293,11 +295,6 @@
 									individual who has a passion for building, engineering and designing. Whether it's
 									software development or fine arts, I am consistently engaged in a project.
 								</p>
-							</div>
-							<div class="w-full md:w-1/3">
-								<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
-									<img src={dogsImg} alt="Description 3" class="flex h-auto w-full object-cover" />
-								</div>
 							</div>
 						</aside>
 						<aside class=" w-full bg-themeBlue text-center">
@@ -342,8 +339,8 @@
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-	.about-section article .more {
-		background: linear-gradient(to top, #4573b9, #6495ed);
+	.about-section-subheader {
+		background: linear-gradient(to top, #4573b9, #2d8fad);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}

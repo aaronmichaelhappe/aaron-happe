@@ -22,14 +22,14 @@
 	});
 </script>
 
-<div class="w-full flex-none pb-4 text-white">
+<div class="w-full flex-none pb-2 text-white">
 	<!-- Promptfoolery -->
 
-	<article class=" my-4 flex flex-col px-4 lg:flex-row">
-		<div class="relative w-full lg:w-1/2">
+	<article class=" my-4 flex flex-col p-4 py-2 md:flex-row">
+		<div class="relative w-full md:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
-					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 bg-themeWarmGray-100 md:top-0 md:left-0 md:flex md:h-full lg:w-3/4"
 				/>
 				<div class="relative max-w-[600px] border-themeWarmGray-400 md:m-8 md:border-8">
 					<a href="https://www.promptfoolery.com/">
@@ -44,14 +44,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-full lg:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
+		<div class="w-full md:w-1/2">
+			<div class="flex flex-col items-end justify-end p-4 md:p-0">
 				<h3
-					class="article-header col-span-1 m-auto mt-0 w-3/4  text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
 				>
 					Promptfoolery
 				</h3>
-				<p class="m-auto w-full text-lg leading-8 text-black md:w-3/4">
+				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
 					As the exclusive Full-Stack Developer for this web game and application, I was solely
 					responsible for its development and design. The technical implementation was accomplished
 					using Sveltekit, Typescript, Firebase, and Tailwind. In addition, I personally designed
@@ -60,7 +60,7 @@
 					technical development, I also collaborated in conceptualizing the idea, establishing game
 					mechanics, and generating prompts and images with the games co-creator.
 				</p>
-				<p class="m-auto w-full pt-4 text-lg leading-8 text-black md:w-3/4">
+				<p class="m-auto w-full pt-4 leading-8 text-black lg:w-3/4">
 					Game coming soon. In the meantime check out the projects <a
 						class="w-full font-bold text-themeGray-900 underline"
 						href="https://github.com/aaronmichaelhappe/promptfoolery">Git</a
@@ -71,16 +71,15 @@
 	</article>
 
 	<!-- Caleres -->
-
-	<article class=" my-4 flex flex-col bg-themeGray-100 py-4 lg:flex-row">
-		<div class="order-2 w-full lg:order-1 lg:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
+	<article class=" my-4 flex flex-col bg-themeGray-100 p-4 py-2 md:flex-row">
+		<div class="order-2 w-full p-4 md:order-1 md:w-1/2">
+			<div class="flex flex-col items-end justify-end p-4 md:p-0">
 				<h3
-					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
 				>
 					Brand Landing Pages
 				</h3>
-				<p class="m-auto w-full text-lg leading-8 text-black md:w-3/4">
+				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
 					I have developed custom brand landing pages for notable brands such as <a
 						class="w-full font-bold text-themeGray-900 underline"
 						href="https://www.famousfootwear.com"
@@ -101,10 +100,10 @@
 				</p>
 			</div>
 		</div>
-		<div class="relative order-1 w-full lg:order-2 lg:w-1/2">
+		<div class="relative order-1 w-full md:order-2 md:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
-					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-200 md:flex lg:top-0 lg:left-0 lg:h-full"
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-200 md:top-0 md:left-0 md:flex md:h-full"
 				/>
 				<div class="relative max-w-[600px] border-themeWarmGray-400 md:m-8 md:border-8">
 					<a href="https://www.famousfootwear.com">
@@ -119,11 +118,11 @@
 		</div>
 	</article>
 	<!-- Web Apps -->
-	<article class="border-themGray-50 my-4 flex flex-col border-b-2 px-4 pb-8 lg:flex-row">
-		<div class="relative w-full lg:w-1/2">
+	<article class="my-4 flex flex-col border-b-2 p-4 pb-8 md:flex-row">
+		<div class="relative w-full md:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
-					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:top-0 md:left-0 md:flex md:h-full"
 				/>
 				<div class="max-w-[600px]border-themeWarmGray-400 relative md:m-8 md:border-8">
 					<a href="https://www.promptfoolery.com/">
@@ -136,14 +135,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-full lg:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
+		<div class="w-full md:w-1/2">
+			<div class="flex flex-col items-end justify-end p-4 md:p-0">
 				<h3
-					class="article-header col-span-1 m-auto mt-0 w-3/4  text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
 				>
 					Web Apps
 				</h3>
-				<p class="m-auto w-full text-lg leading-8 text-black md:w-3/4">
+				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
 					I have had the privilege of being involved in various teams focused on developing web
 					applications. My experiences range from creating internal company tools for Blackstone
 					Publishing and Flood Team Metro Saint Louis to developing Progressive Web Apps for The
@@ -155,3 +154,11 @@
 		</div>
 	</article>
 </div>
+
+<style>
+	h3.article-header {
+		background: linear-gradient(to top, #4573b9, #2d8fad);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+</style>
