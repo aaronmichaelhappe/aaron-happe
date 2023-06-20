@@ -31,14 +31,14 @@
 				<div
 					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
 				/>
-				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
+				<div class="relative max-w-[600px] border-themeWarmGray-400 md:m-8 md:border-8">
 					<a href="https://www.promptfoolery.com/">
 						<img
 							srcset="{PromptFooleryImgSm} 630w, {PromptFooleryImgMd} 765w, {PromptFooleryImg} 900w"
 							sizes="(max-width: 640px) 100vw, (min-width:641px) 75vw"
 							src={PromptFooleryImg}
 							alt="Promptfoolery Game View"
-							class="flex h-auto w-full object-cover"
+							class="flex h-auto w-full border-2 border-themeWarmGray-400 object-cover"
 						/>
 					</a>
 				</div>
@@ -72,8 +72,8 @@
 
 	<!-- Caleres -->
 
-	<article class=" my-4 flex flex-col bg-themeWarmGray-200 py-4 lg:flex-row">
-		<div class="w-full lg:w-1/2">
+	<article class=" my-4 flex flex-col bg-themeGray-100 py-4 lg:flex-row">
+		<div class="order-2 w-full lg:order-1 lg:w-1/2">
 			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
 				<h3
 					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
@@ -101,17 +101,17 @@
 				</p>
 			</div>
 		</div>
-		<div class="relative w-full lg:w-1/2">
+		<div class="relative order-1 w-full lg:order-2 lg:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
-					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-200 md:flex lg:top-0 lg:left-0 lg:h-full"
 				/>
-				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
+				<div class="relative max-w-[600px] border-themeWarmGray-400 md:m-8 md:border-8">
 					<a href="https://www.famousfootwear.com">
 						<img
 							src={TrendShopImg}
 							alt="Famous Footwear Trend Shop"
-							class="flex h-auto w-full object-cover"
+							class="flex h-auto w-full border-2 border-themeWarmGray-400 object-cover"
 						/>
 					</a>
 				</div>
@@ -125,12 +125,12 @@
 				<div
 					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
 				/>
-				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
+				<div class="max-w-[600px]border-themeWarmGray-400 relative md:m-8 md:border-8">
 					<a href="https://www.promptfoolery.com/">
 						<img
 							src={BlackstoneImg}
 							alt="Promptfoolery Game View"
-							class="flex h-auto w-full object-cover"
+							class="flex h-auto w-full border-2 border-themeWarmGray-400 object-cover"
 						/>
 					</a>
 				</div>
