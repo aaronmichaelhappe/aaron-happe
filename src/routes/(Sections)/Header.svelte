@@ -4,6 +4,8 @@
 	//
 	import * as feather from 'feather-icons';
 	//
+	import classNames from 'classnames';
+	//
 	import AnimatedUnderlinedLink from '$lib/AnimatedUnderlinedLink/AnimatedUnderlinedLink.svelte';
 	//
 	import HeaderLogoBlock from './HeaderLogoBlock.svelte';
@@ -16,6 +18,11 @@
 	let blogEl: any;
 	let checkbox: HTMLInputElement;
 	let menuOpen = false;
+	let isMdOrAbove = false;
+	let transformClass = '';
+	let stuckItem = currentSection || '';
+
+	const dispatch = createEventDispatcher();
 
 	let menuIncludes = ['work', 'about', 'blog'];
 
@@ -33,29 +40,39 @@
 		height: 28
 	});
 
-	function updateMenuClasses() {
-		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
-		mobileMenuClasses = isMdOrAbove
-			? ''
-			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-[90%] top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
-					menuOpen ? 'transform-none' : '-translate-x-[100%]'
-			  } md:flex`;
+	$: {
+		if (!isMdOrAbove) {
+			let transformClass = !menuOpen ? 'transform-none' : '-translate-x-[100%]';
+			mobileMenuClasses = classNames(
+				transformClass,
+				'md:flex fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-[90%] top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out'
+			);
+		}
+		if (isMdOrAbove) {
+			mobileMenuClasses = '';
+		}
+	}
+
+	$: labelCheckbox = classNames('hamburger-lines block h-[1.3rem] w-8 cursor-pointer', {
+		'transform rotate-180': menuOpen
+	});
+
+	function assignScreenSizeCondition(closeMenu: boolean = false) {
+		isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
+		if (closeMenu) menuOpen = false;
 	}
 
 	onMount(() => {
-		menuOpen = checkbox.checked;
-		updateMenuClasses();
+		assignScreenSizeCondition();
+		if (isMdOrAbove) {
+			mobileMenuClasses = '';
+		}
 	});
 
-	window.addEventListener('resize', updateMenuClasses);
-
-	let stuckItem = currentSection || '';
-
-	const dispatch = createEventDispatcher();
+	window.addEventListener('resize', () => assignScreenSizeCondition(true));
 
 	function handleScrollTo(event: CustomEvent) {
 		stuckItem = event.detail.to;
-		console.log(event.detail.to);
 		dispatch('scrollto', event.detail.to);
 		toggleMenu();
 	}
@@ -63,8 +80,7 @@
 	function toggleMenu() {
 		if (checkbox) {
 			checkbox.checked = !checkbox.checked;
-			menuOpen = checkbox.checked;
-			updateMenuClasses();
+			menuOpen = checkbox.checked ? false : true;
 		}
 	}
 </script>
@@ -83,10 +99,7 @@
 			class="peer hidden"
 			id="hamburger-checkbox"
 		/>
-		<label
-			for="hamburger-checkbox"
-			class="hamburger-lines block h-[1.25rem] w-8 cursor-pointer peer-checked:rotate-180 peer-checked:transform"
-		>
+		<label for="hamburger-checkbox" class={`${labelCheckbox}`}>
 			<span
 				class="line line1 absolute top-0 block h-[.15rem] w-8 bg-themeGray-900 transition-transform duration-300 ease-in-out"
 			/>
@@ -159,7 +172,9 @@
 				on:unstickallsiblings={() => (stuckItem = 'blog')}
 			/>
 		</div>
-		<a class="md:ml-4 lg:ml-8" href="https://github.com/aaronmichaelhappe/">{@html gitIconSvg}</a>
+		<a class="pb-4 md:ml-4 md:pb-0 lg:ml-8" href="https://github.com/aaronmichaelhappe/"
+			>{@html gitIconSvg}</a
+		>
 		<a class="md:ml-4" href="https://www.linkedin.com/in/aaron-happe-4741176a/"
 			>{@html linkedIconSvg}</a
 		>

@@ -25,14 +25,14 @@
 <div class="w-full flex-none pb-2 text-white">
 	<!-- Promptfoolery -->
 
-	<article class=" my-4 flex flex-col p-4 py-2 md:flex-row">
+	<article class="my-4 mt-0 flex flex-col p-4 py-2 pt-0 md:flex-row">
 		<div class="relative w-full md:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
 					class="absolute left-[12.5%] top-1/2 hidden h-1/2 bg-themeWarmGray-100 md:top-0 md:left-0 md:flex md:h-full lg:w-3/4"
 				/>
 				<div class="relative max-w-[600px] border-themeWarmGray-400 md:m-8 md:border-8">
-					<a href="https://www.promptfoolery.com/">
+					<a href="https://github.com/aaronmichaelhappe/">
 						<img
 							srcset="{PromptFooleryImgSm} 630w, {PromptFooleryImgMd} 765w, {PromptFooleryImg} 900w"
 							sizes="(max-width: 640px) 100vw, (min-width:641px) 75vw"
@@ -63,7 +63,7 @@
 				<p class="m-auto w-full pt-4 leading-8 text-black lg:w-3/4">
 					Game coming soon. In the meantime check out the projects <a
 						class="w-full font-bold text-themeGray-900 underline"
-						href="https://github.com/aaronmichaelhappe/promptfoolery">Git</a
+						href="https://github.com/aaronmichaelhappe/">Git</a
 					>
 				</p>
 			</div>
@@ -125,7 +125,7 @@
 					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:top-0 md:left-0 md:flex md:h-full"
 				/>
 				<div class="max-w-[600px]border-themeWarmGray-400 relative md:m-8 md:border-8">
-					<a href="https://www.promptfoolery.com/">
+					<a href="#">
 						<img
 							src={BlackstoneImg}
 							alt="Promptfoolery Game View"

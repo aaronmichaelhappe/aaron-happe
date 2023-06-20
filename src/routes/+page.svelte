@@ -25,7 +25,6 @@
 	let userHasScrolledPlus100 = false;
 	let userHasScrolled = false;
 
-	$: currentSection = '';
 	let largeHlIDisplayClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[6.5rem] lg:leading-[6.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlDisplayClasses =
@@ -34,6 +33,8 @@
 		'section-header transition cursor-pointer pl-1 text-[2.5rem] font-bold  sm:text-[3rem]',
 		{ 'transition-in': startAnimation }
 	);
+
+	$: currentSection = '';
 
 	$: workTitleWrapperClasses = classNames(
 		'bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white',
@@ -94,6 +95,7 @@
 	function handleSectionHeaderClick(headerElement: HTMLElement | null) {
 		scrollToSection(headerElement as HTMLElement);
 	}
+
 	function onIntroAnimationEnd() {
 		introEnd = true;
 	}
@@ -134,7 +136,7 @@
 				</div>
 
 				<div class="relative p-4">
-					<div class="mb-[2rem] sm:mb-0">
+					<div class="mb-4 sm:mb-0">
 						<LogoBlock userHasScrolled={userHasScrolledPlus100} />
 					</div>
 
@@ -270,10 +272,10 @@
 						About
 					</h4>
 				</div>
-				<article class="mx-auto pb-4">
+				<article class="mx-auto">
 					<div class="mx-auto">
 						<aside
-							class="more mx-auto flex max-w-[1000px] flex-col gap-8 md:flex-row md:gap-4  md:pb-4"
+							class="more mx-auto mb-4 flex max-w-[1000px] flex-col gap-4 md:flex-row  md:pb-4"
 						>
 							<div class="w-full md:w-1/3">
 								<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
@@ -298,7 +300,7 @@
 							</div>
 						</aside>
 						<aside class=" w-full bg-themeBlue text-center">
-							<div class="mx-auto max-w-[1000px] p-6">
+							<div class="mx-auto max-w-[1000px] p-4">
 								<h3 class="text-white">Career Summary</h3>
 								<p class="leading-7 text-white">
 									10+ years of industry experience, including 5+ years of experience in modern
@@ -317,7 +319,7 @@
 			</ScrollSection>
 		</section>
 	</main>
-	<footer class="bg-themeWarmGray-800 p-4 text-white">
+	<footer class="mt-4 bg-themeWarmGray-800 p-4 text-white">
 		<p class="text-center">This Portfolio was Created wtih SvelteKit.</p>
 	</footer>
 </div>
