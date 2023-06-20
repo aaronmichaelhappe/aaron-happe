@@ -45,9 +45,9 @@
 			</div>
 		</div>
 		<div class="w-full md:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 md:p-0">
+			<div class="flex flex-col items-end justify-end">
 				<h3
-					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
+					class="article-header col-span-1 mt-0 self-start pt-2 leading-[3rem] md:mt-8 md:pt-0 lg:m-auto lg:w-3/4"
 				>
 					Promptfoolery
 				</h3>
@@ -72,10 +72,10 @@
 
 	<!-- Caleres -->
 	<article class=" my-4 flex flex-col bg-themeGray-100 p-4 py-2 md:flex-row">
-		<div class="order-2 w-full p-4 md:order-1 md:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 md:p-0">
+		<div class="order-2 w-full md:order-1 md:w-1/2">
+			<div class="flex flex-col items-end justify-end">
 				<h3
-					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
+					class="article-header col-span-1 mt-0 self-start pt-2 leading-[3rem] md:mt-8 md:pt-0 lg:m-auto lg:w-3/4"
 				>
 					Brand Landing Pages
 				</h3>
@@ -136,9 +136,9 @@
 			</div>
 		</div>
 		<div class="w-full md:w-1/2">
-			<div class="flex flex-col items-end justify-end p-4 md:p-0">
+			<div class="flex flex-col items-end justify-end">
 				<h3
-					class="article-header col-span-1 mt-0 self-start leading-[3rem] md:mt-8 lg:m-auto lg:w-3/4"
+					class="article-header col-span-1 mt-0 self-start pt-2 leading-[3rem] md:mt-8 md:pt-0 lg:m-auto lg:w-3/4"
 				>
 					Web Apps
 				</h3>
