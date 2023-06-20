@@ -4,13 +4,11 @@
 	//
 	import { Accordion, AccordionItem } from 'flowbite-svelte';
 	//
-	import BzeesImg from '$lib/images/jasper-fred.png';
-	import PfImg1 from '$lib/images/promptfoolery-prv1.jpg';
-	import PfImg2 from '$lib/images/promptfoolery-prv2.jpg';
-	import PfImg1Md from '$lib/images/promptfoolery-prv1-md.jpg';
-	import PfImg2Md from '$lib/images/promptfoolery-prv2-md.jpg';
-	import PfImg1Sm from '$lib/images/promptfoolery-prv1-sm.jpg';
-	import PfImg2Sm from '$lib/images/promptfoolery-prv2-sm.jpg';
+	import BlackstoneImg from '$lib/images/blackstone.png';
+	import TrendShopImg from '$lib/images/trend-shop.jpg';
+	import PromptFooleryImg from '$lib/images/promptfoolery-prv2.jpg';
+	import PromptFooleryImgMd from '$lib/images/promptfoolery-prv2-md.jpg';
+	import PromptFooleryImgSm from '$lib/images/promptfoolery-prv2-sm.jpg';
 
 	let downIconSvg = feather.icons['chevrons-down'].toSvg({
 		stroke: '#ea7e3f',
@@ -24,30 +22,32 @@
 	});
 </script>
 
-<div class="w-full flex-none pb-6 text-white">
+<div class="w-full flex-none pb-4 text-white">
 	<!-- Promptfoolery -->
 
-	<article class=" flex flex-col pb-4 lg:flex-row">
+	<article class=" my-4 flex flex-col px-4 lg:flex-row">
 		<div class="relative w-full lg:w-1/2">
 			<div class="z-5 relative flex w-full items-center justify-center ">
 				<div
 					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
 				/>
 				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
-					<img
-						srcset="{PfImg2Sm} 630w, {PfImg2Md} 765w, {PfImg2} 900w"
-						sizes="(max-width: 640px) 100vw, (min-width:641px) 75vw"
-						src={PfImg2}
-						alt="Description 3"
-						class="flex h-auto w-full object-cover"
-					/>
+					<a href="https://www.promptfoolery.com/">
+						<img
+							srcset="{PromptFooleryImgSm} 630w, {PromptFooleryImgMd} 765w, {PromptFooleryImg} 900w"
+							sizes="(max-width: 640px) 100vw, (min-width:641px) 75vw"
+							src={PromptFooleryImg}
+							alt="Promptfoolery Game View"
+							class="flex h-auto w-full object-cover"
+						/>
+					</a>
 				</div>
 			</div>
 		</div>
 		<div class="w-full lg:w-1/2">
 			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
 				<h3
-					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+					class="article-header col-span-1 m-auto mt-0 w-3/4  text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
 				>
 					Promptfoolery
 				</h3>
@@ -62,7 +62,7 @@
 				</p>
 				<p class="m-auto w-full pt-4 text-lg leading-8 text-black md:w-3/4">
 					Game coming soon. In the meantime check out the projects <a
-						class="w-full text-themeBlue"
+						class="w-full font-bold text-themeGray-900 underline"
 						href="https://github.com/aaronmichaelhappe/promptfoolery">Git</a
 					>
 				</p>
@@ -70,8 +70,88 @@
 		</div>
 	</article>
 
-	<!-- Internal tools -->
-
 	<!-- Caleres -->
+
+	<article class=" my-4 flex flex-col bg-themeWarmGray-200 py-4 lg:flex-row">
+		<div class="w-full lg:w-1/2">
+			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
+				<h3
+					class="article-header col-span-1 m-auto mt-0 w-3/4 text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+				>
+					Brand Landing Pages
+				</h3>
+				<p class="m-auto w-full text-lg leading-8 text-black md:w-3/4">
+					I have developed custom brand landing pages for notable brands such as <a
+						class="w-full font-bold text-themeGray-900 underline"
+						href="https://www.famousfootwear.com"
+						>Famous Footwear
+					</a>(including renowned brands Famous brands Nike, Converse and Skechers),
+					<a
+						class="w-full font-bold text-themeGray-900 underline"
+						href="https://www.naturalizer.com/"
+						>Naturalizer
+					</a>,
+					<a
+						class="w-full font-bold text-themeGray-900 underline"
+						href="https://www.drschollsshoes.com/"
+						>Dr Scholl's Shoes
+					</a> and more. Collaborating closely with designers, I created interactive brand experiences
+					that increased conversion rates and drove sales. My exceptional work on a Converse Landing
+					Page was recognized with a company-wide award.
+				</p>
+			</div>
+		</div>
+		<div class="relative w-full lg:w-1/2">
+			<div class="z-5 relative flex w-full items-center justify-center ">
+				<div
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
+				/>
+				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
+					<a href="https://www.famousfootwear.com">
+						<img
+							src={TrendShopImg}
+							alt="Famous Footwear Trend Shop"
+							class="flex h-auto w-full object-cover"
+						/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</article>
 	<!-- Web Apps -->
+	<article class="border-themGray-50 my-4 flex flex-col border-b-2 px-4 pb-8 lg:flex-row">
+		<div class="relative w-full lg:w-1/2">
+			<div class="z-5 relative flex w-full items-center justify-center ">
+				<div
+					class="absolute left-[12.5%] top-1/2 hidden h-1/2 w-3/4 bg-themeWarmGray-100 md:flex lg:top-0 lg:left-0 lg:h-full"
+				/>
+				<div class="relative max-w-[600px] border-themeWarmGray-300 md:m-8 md:border-8">
+					<a href="https://www.promptfoolery.com/">
+						<img
+							src={BlackstoneImg}
+							alt="Promptfoolery Game View"
+							class="flex h-auto w-full object-cover"
+						/>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="w-full lg:w-1/2">
+			<div class="flex flex-col items-end justify-end p-4 lg:p-0">
+				<h3
+					class="article-header col-span-1 m-auto mt-0 w-3/4  text-center uppercase leading-[3rem] text-themeBlue lg:mt-8 lg:text-left"
+				>
+					Web Apps
+				</h3>
+				<p class="m-auto w-full text-lg leading-8 text-black md:w-3/4">
+					I have had the privilege of being involved in various teams focused on developing web
+					applications. My experiences range from creating internal company tools for Blackstone
+					Publishing and Flood Team Metro Saint Louis to developing Progressive Web Apps for The
+					Flood Team Metro Saint Louis and SPAs for Power Admin and Blackstone Audio. While my
+					primary role has been as a Frontend Engineer in these projects, I have also had been
+					involved as a web designer and Fullstack developer.
+				</p>
+			</div>
+		</div>
+	</article>
 </div>

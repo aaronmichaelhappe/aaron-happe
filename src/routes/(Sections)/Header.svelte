@@ -23,7 +23,7 @@
 		const isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
 		mobileMenuClasses = isMdOrAbove
 			? ''
-			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-2/3 top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
+			: `fixed shadow border-l border-gray-200 left-[100%] right-[150%] w-[90%] top-0 h-[100vh] bg-themeGray-100 transition-transform duration-300 ease-in-out ${
 					menuOpen ? 'transform-none' : '-translate-x-[100%]'
 			  } md:flex`;
 	}

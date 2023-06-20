@@ -40,6 +40,11 @@
 		height: 28
 	});
 	let mailIconSvg = feather.icons['mail'].toSvg({ stroke: '#fff', width: 36, height: 36 });
+	let gitIconSvg = feather.icons['github'].toSvg({
+		stroke: '#f7a440',
+		width: 28,
+		height: 28
+	});
 
 	let workEl: HTMLElement | null;
 	let aboutEl: HTMLElement | null;
@@ -90,199 +95,203 @@
 </script>
 
 <svelte:window bind:scrollY on:scroll={() => (scrollY > 100 ? (userHasScrolled = true) : null)} />
+<div class="navigating-overlay relative h-screen">
+	<main>
+		<div class="relative h-[100vh]">
+			<div class="mx-auto max-w-[1400px]">
+				<!-- intro background graident -->
+				{#if startAnimation}
+					<div
+						style={`${
+							userHasScrolled
+								? 'background-color: #fff;'
+								: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
+						}`}
+						class={`absolute inset-0 z-0 h-[100vh] transition-all duration-700 ease-in-out`}
+						in:fly={{ y: '100%' }}
+						on:introend={() => onIntroAnimationEnd()}
+					/>
+				{/if}
 
-<main class="navigating-overlay relative h-screen">
-	<div class="relative h-[100vh]">
-		<div class="mx-auto max-w-[1400px]">
-			<!-- intro background graident -->
-			{#if startAnimation}
-				<div
-					style={`${
-						userHasScrolled
-							? 'background-color: #fff;'
-							: 'background: linear-gradient(to top, #dd583e 30%, #e46b3f ); background-color: #dd583e;'
-					}`}
-					class={`absolute inset-0 z-0 h-[100vh] transition-all duration-700 ease-in-out`}
-					in:fly={{ y: '100%' }}
-					on:introend={() => onIntroAnimationEnd()}
-				/>
-			{/if}
-
-			<div bind:this={headerWrapperEl} class={headerWrapperClasses}>
-				<Header {currentSection} on:scrollto={handleScrollTo} {userHasScrolled} />
-			</div>
-
-			<div class="relative p-4">
-				<div class="mb-[2rem] sm:mb-0">
-					<LogoBlock {userHasScrolled} />
+				<div bind:this={headerWrapperEl} class={headerWrapperClasses}>
+					<Header {currentSection} on:scrollto={handleScrollTo} {userHasScrolled} />
 				</div>
 
-				<div class="flex flex-col overflow-hidden">
-					{#if introEnd}
-						<div>
-							{#if !largeTextAnimationFinished}
-								<div class="size-placholder-text ">
-									<span class={smallHlDisplayClasses + ' invisible'}
-										>Slick. Accessible. Modern.</span
-									>
-								</div>
-							{:else}
-								<div>
-									{#each headlines as line, i}
-										<span
-											style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
-											class={`duration-750 transition-color ease-in-out ${smallHlDisplayClasses}`}
-											in:fly={{
-												y: 100,
-												delay: 250 * i,
-												easing: backOut
-											}}>{line}</span
+				<div class="relative p-4">
+					<div class="mb-[2rem] sm:mb-0">
+						<LogoBlock {userHasScrolled} />
+					</div>
+
+					<div class="flex flex-col overflow-hidden">
+						{#if introEnd}
+							<div>
+								{#if !largeTextAnimationFinished}
+									<div class="size-placholder-text ">
+										<span class={smallHlDisplayClasses + ' invisible'}
+											>Slick. Accessible. Modern.</span
 										>
-									{/each}
-								</div>
-							{/if}
-						</div>
-						<div>
-							<p
-								class={largeHlIDisplayClasses}
-								in:fly={{
-									x: '-100%',
-									duration: 650,
-									easing: backOut
-								}}
-								on:introend={() => onLargeTextAnimationEnd()}
-							>
-								<span class="whitespace-nowrap">Web Design &</span>
-								<!-- <span class="whitespace-nowrap">For the modern</span> -->
-							</p>
-							<p
-								class={largeHlIDisplayClasses}
-								in:fly={{
-									x: '100%',
-									duration: 650,
-									easing: backOut
-								}}
-							>
-								Development
-							</p>
-						</div>
-					{/if}
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- <div
-	class="mx-auto flex h-[30vh]  flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
-/> -->
-
-	<div class="absolute bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white">
-		<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
-		<h4
-			bind:this={workEl}
-			class={`${h4WorkTitleClasses}`}
-			on:click={() => handleSectionHeaderClick(workEl)}
-			on:keypress={(event) => {
-				if (event.key === 'Enter' || event.key === ' ') {
-					handleSectionHeaderClick(workEl);
-				}
-			}}
-			tabindex="-1"
-		>
-			Work
-		</h4>
-	</div>
-
-	<!-- Sections -->
-	<section>
-		<!-- Work Title -->
-		<div
-			class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
-		>
-			{@html mailIconSvg}
-		</div>
-
-		<ScrollSection
-			on:inview={(e) => handleInView(e)}
-			name="work"
-			id="work"
-			{currentSection}
-			sectionEl={workEl}
-		>
-			<Work />
-		</ScrollSection>
-	</section>
-	<section class="about-section mt-4 max-w-[1400px] p-4 sm:mt-8" bind:this={aboutEl}>
-		<ScrollSection
-			on:inview={(e) => handleInView(e)}
-			name="about"
-			id="about"
-			{currentSection}
-			sectionEl={aboutEl}
-		>
-			<div class="w-full text-center">
-				<h4
-					class={`${h4WorkTitleClasses} text-center`}
-					on:click={() => handleSectionHeaderClick(aboutEl)}
-					on:keypress={(event) => {
-						if (event.key === 'Enter' || event.key === ' ') {
-							handleSectionHeaderClick(aboutEl);
-						}
-					}}
-					tabindex="-1"
-				>
-					About
-				</h4>
-			</div>
-			<article class="mx-autopb-4 ">
-				<div class="mx-auto">
-					<aside
-						class="more mx-auto flex max-w-[1000px] flex-col gap-8 pb-4  md:flex-row md:gap-4  md:pb-4"
-					>
-						<div class="w-full md:w-2/3">
-							<h3>A litte about me.</h3>
-							<p>
-								I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and Fred.
-								I enjoy hiking, game nights with friends, and exploring local restaurants. Every
-								morning, I start my day by going for a jog either at the park or along the
-								riverfront, followed by meditation, before I begin work.
-							</p>
-
-							<p>
-								I have always had a passion for creating things. During my younger years, I enjoyed
-								building webpages. I also pursued my interests in painting, participated in design
-								contests, and even played in a couple of garage bands. I obtained my associate's
-								degree in Graphic Design, followed by a Master's degree in Fine Arts. Throughout my
-								academic journey and after graduation, I worked as a freelance designer and
-								eventually developer, while simultaneously teaching design.
-							</p>
-						</div>
-						<div class="w-full md:w-1/3">
-							<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
-								<img src={dogsImg} alt="Description 3" class="flex h-auto w-full object-cover" />
+									</div>
+								{:else}
+									<div>
+										{#each headlines as line, i}
+											<span
+												style={`${userHasScrolled ? 'color: #1A1A1A;' : 'color: white;'}`}
+												class={`duration-750 transition-color ease-in-out ${smallHlDisplayClasses}`}
+												in:fly={{
+													y: 100,
+													delay: 250 * i,
+													easing: backOut
+												}}>{line}</span
+											>
+										{/each}
+									</div>
+								{/if}
 							</div>
-						</div>
-					</aside>
-					<aside class=" w-full bg-themeBlue text-center">
-						<div class="mx-auto max-w-[1000px] p-6">
-							<h3 class="text-white">Career Summary</h3>
-							<p class="leading-7 text-white">
-								10+ years of industry experience, including 5+ years of experience in modern
-								JavaScript development with frontend frameworks (Web Apps, SPAs, PWAs, etc.).
-								Possess 1+ year of Fullstack experience. Proficient in collaborating effectively
-								within both in-person and remote teams, as well as working independently,
-								consistently delivering high-quality results for e-commerce, internal company tools,
-								and web applications. Additionally, have a background in art and graphic design,
-								keeping abreast of recent and emerging technologies and adhering to modern best
-								practices.
-							</p>
-						</div>
-					</aside>
+							<div>
+								<p
+									class={largeHlIDisplayClasses}
+									in:fly={{
+										x: '-100%',
+										duration: 650,
+										easing: backOut
+									}}
+									on:introend={() => onLargeTextAnimationEnd()}
+								>
+									<span class="whitespace-nowrap">Web Design &</span>
+									<!-- <span class="whitespace-nowrap">For the modern</span> -->
+								</p>
+								<p
+									class={largeHlIDisplayClasses}
+									in:fly={{
+										x: '100%',
+										duration: 650,
+										easing: backOut
+									}}
+								>
+									Development
+								</p>
+							</div>
+						{/if}
+					</div>
 				</div>
-			</article>
-		</ScrollSection>
-	</section>
-</main>
+			</div>
+		</div>
+
+		<!-- <div
+		class="mx-auto flex h-[30vh]  flex-col items-start justify-start pt-1 sm:h-[10vh] md:flex-row md:items-center md:justify-between"
+	/> -->
+
+		<div class="absolute bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white">
+			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<h4
+				bind:this={workEl}
+				class={`${h4WorkTitleClasses}`}
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}
+				tabindex="-1"
+			>
+				Work
+			</h4>
+		</div>
+
+		<!-- Sections -->
+		<section>
+			<!-- Work Title -->
+			<div
+				class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
+			>
+				{@html mailIconSvg}
+			</div>
+
+			<ScrollSection
+				on:inview={(e) => handleInView(e)}
+				name="work"
+				id="work"
+				{currentSection}
+				sectionEl={workEl}
+			>
+				<Work />
+			</ScrollSection>
+		</section>
+		<section class="about-section max-w-[1400px] px-4 pb-4 " bind:this={aboutEl}>
+			<ScrollSection
+				on:inview={(e) => handleInView(e)}
+				name="about"
+				id="about"
+				{currentSection}
+				sectionEl={aboutEl}
+			>
+				<div class="w-full text-center">
+					<h4
+						class={`${h4WorkTitleClasses} text-center`}
+						on:click={() => handleSectionHeaderClick(aboutEl)}
+						on:keypress={(event) => {
+							if (event.key === 'Enter' || event.key === ' ') {
+								handleSectionHeaderClick(aboutEl);
+							}
+						}}
+						tabindex="-1"
+					>
+						About
+					</h4>
+				</div>
+				<article class="mx-auto pb-4 ">
+					<div class="mx-auto">
+						<aside
+							class="more mx-auto flex max-w-[1000px] flex-col gap-8 pb-2  md:flex-row md:gap-4  md:pb-4"
+						>
+							<div class="w-full md:w-2/3">
+								<h3>A litte about me.</h3>
+								<p>
+									I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and
+									Fred. I enjoy hiking, game nights with friends, and exploring local restaurants.
+									Every morning, I start my day by going for a jog either at the park or along the
+									riverfront, followed by meditation, before I begin work.
+								</p>
+
+								<p>
+									I have always had a passion for creating things. During my younger years, I
+									enjoyed building webpages. I also pursued my interests in painting, participated
+									in design contests, and even played in a couple of garage bands. I obtained my
+									associate's degree in Graphic Design, followed by a Master's degree in Fine Arts.
+									Throughout my academic journey and after graduation, I worked as a freelance
+									designer and eventually developer, while simultaneously teaching design.
+								</p>
+							</div>
+							<div class="w-full md:w-1/3">
+								<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
+									<img src={dogsImg} alt="Description 3" class="flex h-auto w-full object-cover" />
+								</div>
+							</div>
+						</aside>
+						<aside class=" w-full bg-themeBlue text-center">
+							<div class="mx-auto max-w-[1000px] p-6">
+								<h3 class="text-white">Career Summary</h3>
+								<p class="leading-7 text-white">
+									10+ years of industry experience, including 5+ years of experience in modern
+									JavaScript development with frontend frameworks (Web Apps, SPAs, PWAs, etc.).
+									Possess 1+ year of Fullstack experience. Proficient in collaborating effectively
+									within both in-person and remote teams, as well as working independently,
+									consistently delivering high-quality results for e-commerce, internal company
+									tools, and web applications. Additionally, have a background in art and graphic
+									design, keeping abreast of recent and emerging technologies and adhering to modern
+									best practices.
+								</p>
+							</div>
+						</aside>
+					</div>
+				</article>
+			</ScrollSection>
+		</section>
+	</main>
+	<footer class="bg-themeWarmGray-800 p-4 text-white">
+		<p class="text-center">This Portfolio was Created wtih SvelteKit.</p>
+	</footer>
+</div>
 
 <style lang="post-css">
 	@media (min-width: 768px) {
