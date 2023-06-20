@@ -53,10 +53,6 @@
 		}
 	}
 
-	$: labelCheckbox = classNames('hamburger-lines block h-[1.3rem] w-8 cursor-pointer', {
-		'transform rotate-180': menuOpen
-	});
-
 	function assignScreenSizeCondition(closeMenu: boolean = false) {
 		isMdOrAbove = window.matchMedia('(min-width: 768px)').matches;
 		if (closeMenu) menuOpen = false;
@@ -96,10 +92,15 @@
 			type="checkbox"
 			bind:this={checkbox}
 			checked
-			class="peer hidden"
+			class={`peer hidden ${menuOpen ? 'opened' : ''}`}
 			id="hamburger-checkbox"
 		/>
-		<label for="hamburger-checkbox" class={`${labelCheckbox}`}>
+		<label
+			for="hamburger-checkbox"
+			class={`hamburger-lines block h-[1.25rem] w-8 cursor-pointer ${
+				menuOpen ? 'rotate-180 transform' : ''
+			}`}
+		>
 			<span
 				class="line line1 absolute top-0 block h-[.15rem] w-8 bg-themeGray-900 transition-transform duration-300 ease-in-out"
 			/>
@@ -188,13 +189,13 @@
 	.line3 {
 		transform: translateY(-0.6rem) rotate(-45deg);
 	}
-	.peer:checked ~ .hamburger-lines .line1 {
+	.opened ~ .hamburger-lines .line1 {
 		transform: none;
 	}
-	.peer:checked ~ .hamburger-lines .line2 {
+	.opened ~ .hamburger-lines .line2 {
 		opacity: 1;
 	}
-	.peer:checked ~ .hamburger-lines .line3 {
+	.opened ~ .hamburger-lines .line3 {
 		transform: none;
 	}
 </style>
