@@ -310,13 +310,13 @@
 							</div>
 							<div class="w-full md:w-2/3">
 								<h3 class="about-section-subheader">A little about me.</h3>
-								<p class="leading-8">
+								<p class="leading-7">
 									I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and
 									Fred. I enjoy hiking, game nights with friends, and exploring local restaurants.
 									Every morning, I start my day by going for a jog either at the park or along the
 									riverfront, followed by meditation, before I begin work.
 								</p>
-								<p class="leading-8">
+								<p class="leading-7">
 									I have always had a passion for creating things. During my younger years, I
 									enjoyed building webpages. I also pursued my interests in painting, participated
 									in design contests, and even played in a couple of garage bands. I am a proactive
@@ -328,7 +328,7 @@
 						<aside class="w-full bg-themeBlue text-center">
 							<div class="mx-auto max-w-[1000px] p-4">
 								<h3 class="text-white">Career Summary</h3>
-								<p class="leading-8 text-white">
+								<p class="leading-7 text-white">
 									10+ years of industry experience, including 5+ years of experience in modern
 									JavaScript development with frontend frameworks (Web Apps, SPAs, PWAs, etc.).
 									Possess 1+ year of Fullstack experience. Proficient in collaborating effectively

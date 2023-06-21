@@ -51,7 +51,7 @@
 				>
 					Promptfoolery
 				</h3>
-				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
+				<p class="m-auto w-full leading-7 text-black lg:w-3/4">
 					As the exclusive Full-Stack Developer for this web game and application, I was solely
 					responsible for its development and design. The technical implementation was accomplished
 					using Sveltekit, Typescript, Firebase, and Tailwind. In addition, I personally designed
@@ -60,7 +60,7 @@
 					technical development, I also collaborated in conceptualizing the idea, establishing game
 					mechanics, and generating prompts and images with the games co-creator.
 				</p>
-				<p class="m-auto w-full pt-4 leading-8 text-black lg:w-3/4">
+				<p class="m-auto w-full pt-4 leading-7 text-black lg:w-3/4">
 					Game coming soon. In the meantime check out the projects <a
 						class="w-full font-bold text-themeGray-900 underline"
 						href="https://github.com/aaronmichaelhappe/">Git</a
@@ -79,7 +79,7 @@
 				>
 					Brand Landing Pages
 				</h3>
-				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
+				<p class="m-auto w-full leading-7 text-black lg:w-3/4">
 					I have developed custom brand landing pages for notable brands such as <a
 						class="w-full font-bold text-themeGray-900 underline"
 						href="https://www.famousfootwear.com"
@@ -142,7 +142,7 @@
 				>
 					Web Apps
 				</h3>
-				<p class="m-auto w-full leading-8 text-black lg:w-3/4">
+				<p class="m-auto w-full leading-7 text-black lg:w-3/4">
 					I have had the privilege of being involved in various teams focused on developing web
 					applications. My experiences range from creating internal company tools for Blackstone
 					Publishing and Flood Team Metro Saint Louis to developing Progressive Web Apps for The
