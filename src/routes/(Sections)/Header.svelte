@@ -161,7 +161,7 @@
 				on:unstickallsiblings={() => (stuckItem = 'blog')}
 			/>
 		</div> -->
-		<div class="flex cursor-pointer pt-4 pb-4 md:pb-0 lg:ml-8">
+		<div class="flex cursor-pointer pb-4 pt-4 sm:pt-0 md:pb-0 lg:ml-8">
 			<a class="inline-block pb-4 md:pb-0 " href="https://github.com/aaronmichaelhappe/"
 				>{@html gitIconSvg}</a
 			>

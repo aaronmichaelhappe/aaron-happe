@@ -52,7 +52,7 @@
 					Promptfoolery
 				</h3>
 				<p class="m-auto w-full leading-7 text-black lg:w-3/4">
-					As the exclusive Full-Stack Developer for this web game and application, I was solely
+					As the exclusive Full stackk Developer for this web game and application, I was solely
 					responsible for its development and design. The technical implementation was accomplished
 					using Sveltekit, Typescript, Firebase, and Tailwind. In addition, I personally designed
 					all the visual elements, including the landing page, logo, and all aspects of the
@@ -145,8 +145,8 @@
 				<p class="m-auto w-full leading-7 text-black lg:w-3/4">
 					I have had the privilege of being involved in various teams focused on developing web
 					applications. My experiences range from creating internal company tools for Blackstone
-					Publishing and Flood Team Metro Saint Louis to developing Progressive Web Apps for The
-					Flood Team Metro Saint Louis and SPAs for Power Admin and Blackstone Audio. While my
+					Publishing and The Flood Team Metro Saint Louis to developing Progressive Web Apps for The
+					Flood Team Metro Saint Louis and SPAs for Power Admin and Blackstone Publishing. While my
 					primary role has been as a Frontend Engineer in these projects, I have also had been
 					involved as a web designer and Fullstack developer.
 				</p>
