@@ -28,7 +28,7 @@
 	let largeHlIDisplayClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[6.5rem] lg:leading-[6.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlDisplayClasses =
-		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
+		'mr-1 inline-block text-[1.5rem] font-extrabold leading-[1.5rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
 	let h4SectionTitleClasses = classNames(
 		'section-header transition cursor-pointer pl-1 text-[2.5rem] font-bold  sm:text-[3rem]',
 		{ 'transition-in': startAnimation }
@@ -249,11 +249,11 @@
 
 		<!-- Sections -->
 		<section>
-			<div
+			<!-- <div
 				class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
 			>
 				{@html mailIconSvg}
-			</div>
+			</div> -->
 
 			<ScrollSection
 				on:inview={(e) => handleInView(e)}
@@ -345,7 +345,12 @@
 		</section>
 	</main>
 	<footer class="mt-4 bg-themeWarmGray-800 p-4 text-white">
-		<p class="text-center">This Portfolio was Created wtih SvelteKit.</p>
+		<p class="text-center">
+			This Portfolio was Created wtih <a
+				class="w-full font-bold text-themeGray-200 underline"
+				href="https://kit.svelte.dev/">SvelteKit.</a
+			>
+		</p>
 	</footer>
 </div>
 
