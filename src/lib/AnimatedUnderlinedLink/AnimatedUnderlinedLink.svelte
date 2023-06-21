@@ -19,7 +19,6 @@
 		if (stuck && stuckItem !== '') {
 			$size = 1;
 		} else {
-			console.log('UHUNUNSTUCK');
 			$size = 0;
 		}
 	}

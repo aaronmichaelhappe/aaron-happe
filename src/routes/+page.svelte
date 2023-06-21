@@ -25,15 +25,16 @@
 	let userHasScrolledPlus100 = false;
 	let userHasScrolled = false;
 
-	$: currentSection = '';
 	let largeHlIDisplayClasses =
 		'translate-x-[100] font-extrabold uppercase lg:text-[6.5rem] lg:leading-[6.5rem] text-[12.5vw] leading-[12.5vw]';
 	let smallHlDisplayClasses =
-		'mr-1 inline-block text-[2rem] font-extrabold leading-[2rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
+		'mr-1 inline-block text-[1.5rem] font-extrabold leading-[1.5rem] sm:text-[5vw] sm:leading-[5vw] md:text-[4vw] md:leading-[4vw] text-white';
 	let h4SectionTitleClasses = classNames(
 		'section-header transition cursor-pointer pl-1 text-[2.5rem] font-bold  sm:text-[3rem]',
 		{ 'transition-in': startAnimation }
 	);
+
+	$: currentSection = '';
 
 	$: workTitleWrapperClasses = classNames(
 		'bottom-0 left-0 right-0 flex w-full max-w-[1400px] items-center bg-white',
@@ -94,6 +95,7 @@
 	function handleSectionHeaderClick(headerElement: HTMLElement | null) {
 		scrollToSection(headerElement as HTMLElement);
 	}
+
 	function onIntroAnimationEnd() {
 		introEnd = true;
 	}
@@ -134,7 +136,7 @@
 				</div>
 
 				<div class="relative p-4">
-					<div class="mb-[2rem] sm:mb-0">
+					<div class="mb-4 sm:mb-0">
 						<LogoBlock userHasScrolled={userHasScrolledPlus100} />
 					</div>
 
@@ -198,7 +200,15 @@
 	/> -->
 
 		<div class={workTitleWrapperClasses}>
-			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<span
+				class="inline-block cursor-pointer pl-2 sm:pl-4"
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}>{@html downIconSvg}</span
+			>
 			<h4
 				class={`${h4SectionTitleClasses}`}
 				on:click={() => handleSectionHeaderClick(workEl)}
@@ -213,7 +223,15 @@
 			</h4>
 		</div>
 		<div class={`${workTitleWrapperClasses2}`}>
-			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<span
+				class="inline-block cursor-pointer pl-2 sm:pl-4"
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}>{@html downIconSvg}</span
+			>
 			<h4
 				bind:this={workEl}
 				class={`${h4SectionTitleClasses}`}
@@ -231,11 +249,12 @@
 
 		<!-- Sections -->
 		<section>
-			<div
+			<!-- add back in -->
+			<!-- <div
 				class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
 			>
 				{@html mailIconSvg}
-			</div>
+			</div> -->
 
 			<ScrollSection
 				on:inview={(e) => handleInView(e)}
@@ -247,7 +266,7 @@
 				<Work />
 			</ScrollSection>
 		</section>
-		<section class="about-section max-w-[1400px] px-4 pb-4 " bind:this={aboutEl}>
+		<section class="about-section max-w-[1400px] pb-4 " bind:this={aboutEl}>
 			<ScrollSection
 				on:inview={(e) => handleInView(e)}
 				name="about"
@@ -255,8 +274,17 @@
 				{currentSection}
 				sectionEl={aboutEl}
 			>
-				<div class={titleWrapperClasses}>
-					<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+				<div class={`${titleWrapperClasses}`}>
+					<span
+						on:click={() => handleSectionHeaderClick(aboutEl)}
+						on:keypress={(event) => {
+							if (event.key === 'Enter' || event.key === ' ') {
+								handleSectionHeaderClick(aboutEl);
+							}
+						}}
+						class="inline-block cursor-pointer pl-2 sm:pl-4"
+						>{@html downIconSvg}
+					</span>
 					<h4
 						class={`${h4SectionTitleClasses}`}
 						on:click={() => handleSectionHeaderClick(aboutEl)}
@@ -270,10 +298,10 @@
 						About
 					</h4>
 				</div>
-				<article class="mx-auto pb-4">
+				<article class=" mx-auto px-4">
 					<div class="mx-auto">
 						<aside
-							class="more mx-auto flex max-w-[1000px] flex-col gap-8 md:flex-row md:gap-4  md:pb-4"
+							class="more mx-auto mb-4 flex max-w-[1000px] flex-col gap-4 md:flex-row  md:pb-4"
 						>
 							<div class="w-full md:w-1/3">
 								<div class="mx-auto max-w-[450px] border-themeWarmGray-300 md:m-8  md:border-8">
@@ -282,13 +310,13 @@
 							</div>
 							<div class="w-full md:w-2/3">
 								<h3 class="about-section-subheader">A little about me.</h3>
-								<p>
+								<p class="leading-7">
 									I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and
 									Fred. I enjoy hiking, game nights with friends, and exploring local restaurants.
 									Every morning, I start my day by going for a jog either at the park or along the
 									riverfront, followed by meditation, before I begin work.
 								</p>
-								<p>
+								<p class="leading-7">
 									I have always had a passion for creating things. During my younger years, I
 									enjoyed building webpages. I also pursued my interests in painting, participated
 									in design contests, and even played in a couple of garage bands. I am a proactive
@@ -297,8 +325,8 @@
 								</p>
 							</div>
 						</aside>
-						<aside class=" w-full bg-themeBlue text-center">
-							<div class="mx-auto max-w-[1000px] p-6">
+						<aside class="w-full bg-themeBlue text-center">
+							<div class="mx-auto max-w-[1000px] p-4">
 								<h3 class="text-white">Career Summary</h3>
 								<p class="leading-7 text-white">
 									10+ years of industry experience, including 5+ years of experience in modern
@@ -317,8 +345,13 @@
 			</ScrollSection>
 		</section>
 	</main>
-	<footer class="bg-themeWarmGray-800 p-4 text-white">
-		<p class="text-center">This Portfolio was Created wtih SvelteKit.</p>
+	<footer class="mt-4 bg-themeWarmGray-800 p-4 text-white">
+		<p class="text-center">
+			This Portfolio was Created wtih <a
+				class="w-full font-bold text-themeGray-200 underline"
+				href="https://kit.svelte.dev/">SvelteKit.</a
+			>
+		</p>
 	</footer>
 </div>
 
