@@ -200,7 +200,15 @@
 	/> -->
 
 		<div class={workTitleWrapperClasses}>
-			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<span
+				class="inline-block cursor-pointer pl-2 sm:pl-4"
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}>{@html downIconSvg}</span
+			>
 			<h4
 				class={`${h4SectionTitleClasses}`}
 				on:click={() => handleSectionHeaderClick(workEl)}
@@ -215,7 +223,15 @@
 			</h4>
 		</div>
 		<div class={`${workTitleWrapperClasses2}`}>
-			<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+			<span
+				class="inline-block cursor-pointer pl-2 sm:pl-4"
+				on:click={() => handleSectionHeaderClick(workEl)}
+				on:keypress={(event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						handleSectionHeaderClick(workEl);
+					}
+				}}>{@html downIconSvg}</span
+			>
 			<h4
 				bind:this={workEl}
 				class={`${h4SectionTitleClasses}`}
@@ -258,7 +274,16 @@
 				sectionEl={aboutEl}
 			>
 				<div class={titleWrapperClasses}>
-					<span class="inline-block pl-2 sm:pl-4">{@html downIconSvg}</span>
+					<span
+						on:click={() => handleSectionHeaderClick(aboutEl)}
+						on:keypress={(event) => {
+							if (event.key === 'Enter' || event.key === ' ') {
+								handleSectionHeaderClick(aboutEl);
+							}
+						}}
+						class="inline-block cursor-pointer pl-2 sm:pl-4"
+						>{@html downIconSvg}
+					</span>
 					<h4
 						class={`${h4SectionTitleClasses}`}
 						on:click={() => handleSectionHeaderClick(aboutEl)}
