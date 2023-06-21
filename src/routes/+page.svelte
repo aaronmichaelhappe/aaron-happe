@@ -249,6 +249,7 @@
 
 		<!-- Sections -->
 		<section>
+			<!-- add back in -->
 			<!-- <div
 				class="fixed right-4 bottom-4 z-50 flex items-center justify-center rounded-full bg-themeGray-700 p-4"
 			>
@@ -265,7 +266,7 @@
 				<Work />
 			</ScrollSection>
 		</section>
-		<section class="about-section max-w-[1400px] px-4 pb-4 " bind:this={aboutEl}>
+		<section class="about-section max-w-[1400px] pb-4 " bind:this={aboutEl}>
 			<ScrollSection
 				on:inview={(e) => handleInView(e)}
 				name="about"
@@ -273,7 +274,7 @@
 				{currentSection}
 				sectionEl={aboutEl}
 			>
-				<div class={titleWrapperClasses}>
+				<div class={`${titleWrapperClasses}`}>
 					<span
 						on:click={() => handleSectionHeaderClick(aboutEl)}
 						on:keypress={(event) => {
@@ -297,7 +298,7 @@
 						About
 					</h4>
 				</div>
-				<article class="mx-auto">
+				<article class=" mx-auto px-4">
 					<div class="mx-auto">
 						<aside
 							class="more mx-auto mb-4 flex max-w-[1000px] flex-col gap-4 md:flex-row  md:pb-4"
@@ -309,13 +310,13 @@
 							</div>
 							<div class="w-full md:w-2/3">
 								<h3 class="about-section-subheader">A little about me.</h3>
-								<p>
+								<p class="leading-8">
 									I live in Portland, Oregon, with my husband Nick and our two dogs, Jasper and
 									Fred. I enjoy hiking, game nights with friends, and exploring local restaurants.
 									Every morning, I start my day by going for a jog either at the park or along the
 									riverfront, followed by meditation, before I begin work.
 								</p>
-								<p>
+								<p class="leading-8">
 									I have always had a passion for creating things. During my younger years, I
 									enjoyed building webpages. I also pursued my interests in painting, participated
 									in design contests, and even played in a couple of garage bands. I am a proactive
@@ -324,10 +325,10 @@
 								</p>
 							</div>
 						</aside>
-						<aside class=" w-full bg-themeBlue text-center">
+						<aside class="w-full bg-themeBlue text-center">
 							<div class="mx-auto max-w-[1000px] p-4">
 								<h3 class="text-white">Career Summary</h3>
-								<p class="leading-7 text-white">
+								<p class="leading-8 text-white">
 									10+ years of industry experience, including 5+ years of experience in modern
 									JavaScript development with frontend frameworks (Web Apps, SPAs, PWAs, etc.).
 									Possess 1+ year of Fullstack experience. Proficient in collaborating effectively
