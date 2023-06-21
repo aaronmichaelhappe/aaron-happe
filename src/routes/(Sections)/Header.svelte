@@ -88,7 +88,7 @@
 		<input
 			type="checkbox"
 			bind:checked={menuOpen}
-			class={`peer hidden ${menuOpen ? 'opened' : ''}`}
+			class={`peer hidden ${menuOpen ? '' : 'opened'}`}
 			id="hamburger-checkbox"
 		/>
 		<label
