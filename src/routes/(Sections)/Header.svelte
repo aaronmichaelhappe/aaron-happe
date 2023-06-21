@@ -157,7 +157,7 @@
 			on:unstickallsiblings={() => (stuckItem = 'about')}
 		/> -->
 		</div>
-		<div class="cursor-pointer pb-4 md:ml-4 lg:ml-8">
+		<!-- <div class="cursor-pointer pb-4 md:ml-4 lg:ml-8">
 			<AnimatedUnderlinedLink
 				bind:this={blogEl}
 				name="Blog"
@@ -168,7 +168,7 @@
 				stuck={stuckItem === 'work'}
 				on:unstickallsiblings={() => (stuckItem = 'blog')}
 			/>
-		</div>
+		</div> -->
 		<a class="pb-4 md:ml-4 md:pb-0 lg:ml-8" href="https://github.com/aaronmichaelhappe/"
 			>{@html gitIconSvg}</a
 		>
