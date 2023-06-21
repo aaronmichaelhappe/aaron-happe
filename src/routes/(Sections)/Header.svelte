@@ -19,14 +19,11 @@
 	let checkbox: HTMLInputElement;
 	let menuOpen = false;
 	let isMdOrAbove = false;
+	let mobileMenuClasses = '';
 	let transformClass = '';
 	let stuckItem = currentSection || '';
 
 	const dispatch = createEventDispatcher();
-
-	let menuIncludes = ['work', 'about', 'blog'];
-
-	let mobileMenuClasses = '';
 
 	const gitIconSvg = feather.icons['github'].toSvg({
 		stroke: '#000',
@@ -58,15 +55,6 @@
 		if (closeMenu) menuOpen = false;
 	}
 
-	onMount(() => {
-		assignScreenSizeCondition();
-		if (isMdOrAbove) {
-			mobileMenuClasses = '';
-		}
-	});
-
-	window.addEventListener('resize', () => assignScreenSizeCondition(true));
-
 	function handleScrollTo(event: CustomEvent) {
 		stuckItem = event.detail.to;
 		dispatch('scrollto', event.detail.to);
@@ -76,9 +64,18 @@
 	function toggleMenu() {
 		if (checkbox) {
 			checkbox.checked = !checkbox.checked;
-			menuOpen = checkbox.checked ? false : true;
+			menuOpen = checkbox.checked;
 		}
 	}
+
+	onMount(() => {
+		assignScreenSizeCondition();
+		if (isMdOrAbove) {
+			mobileMenuClasses = '';
+		}
+	});
+
+	window.addEventListener('resize', () => assignScreenSizeCondition(true));
 </script>
 
 <!-- hamburger menu icon -->
@@ -90,8 +87,7 @@
 	<div class="pointer-events-auto fixed">
 		<input
 			type="checkbox"
-			bind:this={checkbox}
-			checked
+			bind:checked={menuOpen}
 			class={`peer hidden ${menuOpen ? 'opened' : ''}`}
 			id="hamburger-checkbox"
 		/>
